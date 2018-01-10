@@ -30,7 +30,7 @@ return  ; End of auto-execute section. The script is idle until the user does so
 {
 Gui, Submit
 Gui Cancel
-Gui, SubmitCheck_ForUpdate(1)
+Check_ForUpdate(1)
 return
 }
 GuiClose:
