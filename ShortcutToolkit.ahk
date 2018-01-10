@@ -30,15 +30,15 @@ return  ; End of auto-execute section. The script is idle until the user does so
 {
 Gui, Submit
 Gui Cancel
-Check_ForUpdate(1)
+; Check_ForUpdate(1)
 return
 }
 GuiClose:
 {
 Gui, Submit
 Gui Cancel
-Check_ForUpdate(1) ;,,vUpdateTest)
-;MsgBox, %vUpdateTest%
+; Check_ForUpdate(1) ;,,vUpdateTest)
+; MsgBox, %vUpdateTest%
 return
 }
 
@@ -432,7 +432,8 @@ Return
 
 
 
-
+; Random Notes that likely aren't needed:
+/*
 
 
 
@@ -444,7 +445,7 @@ Return
 ;This is the actual function.
 Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunction = "", ByRef _Information = "")
 {
-	; MsgBox, TEST!
+	 
 	;Version.ini file format
 	;
 	;[Info]
@@ -453,7 +454,7 @@ Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunctio
 	;MD5=00000000000000000000000000000000 or omit this key completly to skip the MD5 file validation
 	
 	Static Script_Name := "ShortcutToolkit" ;Your script name
-	, Version_Number := 0.6 ;The script's version number
+	, Version_Number := 0.01 ;The script's version number
 	, Update_URL := "URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/Version.ini?raw=true" ;The URL of the version.ini file for your script
 	, Retry_Count := 3 ;Retry count for if/when anything goes wrong
 	
@@ -472,7 +473,6 @@ Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunctio
 		
 		If (Version = "N/A"){
 			FileDelete,%Version_File%
-			
 			If (A_Index = Retry_Count)
 				_Information .= "The version info file doesn't have a ""Version"" key in the ""Info"" section or the file can't be downloaded."
 			Else
@@ -667,14 +667,15 @@ Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunctio
 	
 	_Information := _Information = "" ? "None" : _Information
 	
+	MsgBox, TEST 2!
+	
 	Return Return_Val
 }
 
 
 
 
-; Random Notes that likely aren't needed:
-/*
+
 
 GetUnP() ; In the future, I can make this more general by making FMAHK.config a passed argument
 {
