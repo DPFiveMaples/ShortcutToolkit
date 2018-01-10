@@ -37,7 +37,8 @@ GuiClose:
 {
 Gui, Submit
 Gui Cancel
-Check_ForUpdate(1)
+Check_ForUpdate(1) ;,,vUpdateTest)
+;MsgBox, %vUpdateTest%
 return
 }
 
@@ -448,12 +449,12 @@ Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunctio
 	;
 	;[Info]
 	;Version=1.4
-	;URL=URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk or .exe
+	;URL=URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true or .exe
 	;MD5=00000000000000000000000000000000 or omit this key completly to skip the MD5 file validation
 	
 	Static Script_Name := "ShortcutToolkit" ;Your script name
-	, Version_Number := 0.3 ;The script's version number
-	, Update_URL := "URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/Version.ini" ;The URL of the version.ini file for your script
+	, Version_Number := 0.6 ;The script's version number
+	, Update_URL := "URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/Version.ini?raw=true" ;The URL of the version.ini file for your script
 	, Retry_Count := 3 ;Retry count for if/when anything goes wrong
 	
 	Random,Filler,10000000,99999999
