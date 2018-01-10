@@ -448,12 +448,12 @@ Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunctio
 	;
 	;[Info]
 	;Version=1.4
-	;URL=https://gitlab.com/Marvin_FiveMaples/Dedupe-Index-Script/raw/master/ShortcutToolkit.ahk or .exe
+	;URL=URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk or .exe
 	;MD5=00000000000000000000000000000000 or omit this key completly to skip the MD5 file validation
 	
 	Static Script_Name := "ShortcutToolkit" ;Your script name
 	, Version_Number := 0.3 ;The script's version number
-	, Update_URL := "https://gitlab.com/Marvin_FiveMaples/Dedupe-Index-Script/raw/master/Version.ini" ;The URL of the version.ini file for your script
+	, Update_URL := "URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/Version.ini" ;The URL of the version.ini file for your script
 	, Retry_Count := 3 ;Retry count for if/when anything goes wrong
 	
 	Random,Filler,10000000,99999999
