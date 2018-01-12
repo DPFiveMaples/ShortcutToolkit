@@ -1,50 +1,146 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases, prevents checking empty variables
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 #SINGLEINSTANCE force
+;SetBatchLines, -1   ; Runs the script at max speed, default is 10 or 20 ms
+
+; Consider putting a "First Run" quick tip upon first running the file - a quick 3 second splash screen that indicates to hit the "help" key to find out more.
+
+/*
+vFirstRun := 0
+If (vFirstRun <> 0)
+{
+MsgBox, Hit Win+F2 to learn moar!
+}
+vFirstRun := 1
+*/
 
 ; Where ALL of this is stored on Dropbox (update there to trigger propigation): https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
 
 
 
-:*:Jam`t::James Chase`t8023875157`t110
+:*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 
 
-!#d::
+;===========================================================
+;==  DP Dashboard
+;===========================================================
+
+
+^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands (will also close it if it's open)
 {
 
-; Example: A simple input-box that asks for first name and last name:
-
-Gui, Add, Text,, Standard Dedupe Indexes & Dist Report:
+Gui, New,,DP Dashboard
+Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:
 Gui, Add, Text,, JUST Dedupe Indexes:
-Gui, Add, Text,, Postal One! Login:
+Gui, Add, Text,, Clipboard Manager:
+; Gui, Add, Text,, Postal One! Login:    ; Come back for this one after release
 Gui, Add, Text,, WH NDC/SCF Info:
-Gui, Add, Button, default ym, &StdDedupe  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
-Gui, Add, Button,, JustDupeIndexes
-Gui, Add, Button,, Login
-Gui, Add, Button,, WHIMB
-Gui, Show,, Five Maples Dashboard
+Gui, Add, Button, ym, &Std Dedupe  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
+Gui, Add, Button,, &Just Dupe Indexes
+Gui, Add, Button, default, &ClipboardMgr
+;Gui, Add, Button,, &Login ; Come back for this one after release
+Gui, Add, Button,, &WHIMB
+Gui, Show,,DP Dashboard
 return  ; End of auto-execute section. The script is idle until the user does something.
 
 }
 
-~Esc::
+
+
+
+;===========================================================
+;==  Clipboard Management
+;===========================================================
+
+~^c::
 {
-Gui, Submit
-Gui Cancel
-; Check_ForUpdate(1)
+sleep, 100
+if clipboard = ""
+{
+	; it's a picture, file etc.
+	return
+}
+if clipboard = %clpb1%
+{
+	; already exists, stay in slot 1
+}
+else
+{
+	; new content
+	clpb5 := clpb4
+	clpb4 := clpb3
+	clpb3 := clpb2
+	clpb2 := clpb1
+	clpb1 := clipboard
+}
+; finally
+clpb1len := StrLen(clpb1)
+StringTrimRight, clpbs1, clpb1, clpb1len - 50
+clpb2len := StrLen(clpb2)
+StringTrimRight, clpbs2, clpb2, clpb2len - 50
+clpb3len := StrLen(clpb3)
+StringTrimRight, clpbs3, clpb3, clpb3len - 50
+clpb4len := StrLen(clpb4)
+StringTrimRight, clpbs4, clpb4, clpb4len - 50
+clpb5len := StrLen(clpb5)
+StringTrimRight, clpbs5, clpb5, clpb5len - 50
+; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied… every time someone copies.
+sleep, 1000
+tooltip
 return
 }
-GuiClose:
+
+ButtonClipboardMgr:
+^+v:: ;c Ctrl+Shift+V will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default to your current clipboard after 3 seconds.
 {
-Gui, Submit
-Gui Cancel
-; Check_ForUpdate(1) ;,,vUpdateTest)
-; MsgBox, %vUpdateTest%
-return
+	;varProgressMeter := 0
+	clpb1len := StrLen(clpb1)
+	StringTrimRight, clpbs1, clpb1, clpb1len - 50
+	clpb2len := StrLen(clpb2)
+	StringTrimRight, clpbs2, clpb2, clpb2len - 50
+	clpb3len := StrLen(clpb3)
+	StringTrimRight, clpbs3, clpb3, clpb3len - 50
+	clpb4len := StrLen(clpb4)
+	StringTrimRight, clpbs4, clpb4, clpb4len - 50
+	clpb5len := StrLen(clpb5)
+	StringTrimRight, clpbs5, clpb5, clpb5len - 50
+	; inputbox, clpbNbr, which clipboard number do you want to have in your clipboard now?, 1: %clpbs1% 2: %clpbs2%`n3: %clpbs3% 4: %clpbs4%`n5: %clpbs5%`n   ; In place originally, replaced with my GUI below
+	Gui, New,,Choose your Clipboard
+	Gui, Add, Radio,vclpbNbr Checked,Clipboard #&1: %clpbs1%
+	Gui, Add, Radio,,Clipboard #&2: %clpbs2%
+	Gui, Add, Radio,,Clipboard #&3: %clpbs3%
+	Gui, Add, Radio,,Clipboard #&4: %clpbs4%
+	Gui, Add, Radio,,Clipboard #&5: %clpbs5%
+	Gui, Add, Text,w300, You will auto-select #1 after 3 seconds,Please select desired clipboard content and click "go".
+	Gui, Add, Progress, w300 h20 cBlue vVarProgressMeter
+	Gui, Add, Button,default ym,&Go
+	Gui, Show,,Choose your Clipboard
+	Loop{
+			GuiControl,, varProgressMeter, +1
+			sleep, 30
+		} Until A_Index > 99
+	GoSub, ButtonGo
+	Return
+	
+	
+	ButtonGo:
+		{
+			gui, submit
+			;if errorlevel = 1  ; old code, not sure what this was for or how to use it
+			;	return			; old code, not sure what this was for or how to use it
+			clipboard := clpb%clpbNbr%
+			; Sleep, 1000
+			; MsgBox, %clpbNbr% Test
+			return
+		}
+Return	
 }
+
+
+
 
 
 ButtonLogin:
@@ -74,9 +170,6 @@ ButtonLogin:
 MsgBox Found!
 
 	MsgBox, %vP1Blob%
-	;WinWait, Index Name, 
-	;IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	;WinWaitActive, Index Name, 
 
 
 	Return
@@ -114,7 +207,7 @@ ButtonJustDupeIndexes:
 Gui, Submit
 WinWait, ahk_class TMailList_Form, 
 IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
-WinWaitActive, ahk_class TMailList_Form
+WinWaitActive, ahk_class TMailList_Form	
 SetupJustDupeIndexes()
 Return
 }
@@ -263,454 +356,281 @@ Return
 
 SetupStdDedupe()
 {
-WinWait, ahk_class TMailList_Form, 
-IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
-WinWaitActive, ahk_class TMailList_Form
-sleep, 100
-Gui, Submit  ; Save the input from the user to each control's associated variable.
+	WinWait, ahk_class TMailList_Form, 
+	IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
+	WinWaitActive, ahk_class TMailList_Form
+	sleep, 100
+	Gui, Submit  ; Save the input from the user to each control's associated variable.
+
+	;/*
+
+	Progress, w250,,, Setting up your Dedupe - Please Hold Your Ponies
+
+	; Start of Script, this chunk of text gets us INTO the indexes - RUN FROM BASE MM2010 WINDOW!
+	Send, {CTRLDOWN}d{CTRLUP}
+	WinWait, Distribution Report, 
+	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
+	WinWaitActive, Distribution Report, 
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+
+	Progress, 12
+
+	; Possible modularity chance from here...
+
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZCLF2{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],12) ; Sending ZCLF2
+
+	Progress, 25
+
+	; Creates ZLF2, sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZLF2{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],5) ; Sending ZLF2
+
+	Progress, 37
+
+	; Creates ZLF, sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZLF{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[First Name_] ; Sending ZLF
+
+	Progress, 50
+
+	; Creates ZL2, sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZL2{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[Add2_] ; Sending ZL2
+
+	Progress, 62
+
+	; Creates ZCL, sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZCL{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}Left([ZIP+4_],5)+Left([Company_],10)+Left([Last Name_],10) ; Sending ZCL
+
+	Progress, 75
+
+	; Creates ZDPL, sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, ZDPL{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
+
+
+	; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, Z2{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
+
+	; to here.
+
+	Progress, 90
+
+	Send, {ALTDOWN}n{ALTUP}
+	WinWait, Index Name, 
+	IfWinNotActive, Index Name, , WinActivate, Index Name, 
+	WinWaitActive, Index Name, 
+	Send, Dedupe{ENTER}
+	WinWait, Indexes, 
+	IfWinNotActive, Indexes, , WinActivate, Indexes, 
+	WinWaitActive, Indexes, 
+	Send, {ALTDOWN}xp{ALTUP}
+	SendInput {Raw}[Source List] ; Naming Source List
+	Send, {ALTDOWN}o{ALTUP}
+	WinWait, Confirm, 
+	IfWinNotActive, Confirm, , WinActivate, Confirm, 
+	WinWaitActive, Confirm, 
+	Send, y
+	WinWait, Distribution Report, 
+	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
+	WinWaitActive, Distribution Report, 
+	Progress, 94
+	Send, {SHIFTDOWN}{TAB}{SHIFTUP}dedupe{ALTDOWN}b{ALTUP}
+	WinWait, Save Procedure Information, 
+	IfWinNotActive, Save Procedure Information, , WinActivate, Save Procedure Information, 
+	WinWaitActive, Save Procedure Information, 
+	Sleep, 100
+	Send, {ALTDOWN}d{ALTUP}
+
+	Progress, 98
+
+	;Printing the distribution report - this may need to change later
+
+	WinWait, Distribution Report - Print, 
+	IfWinNotActive, Distribution Report - Print, , WinActivate, Distribution Report - Print, 
+	WinWaitActive, Distribution Report - Print, 
+	Send, {ALTDOWN}n{ALTUP}adobe{ALTDOWN}o{ALTUP}{ENTER}
+
+	; End of Script, exits back to "Indexes"
+	Progress, 100
+	Sleep, 10
+	Progress, Off
+	*/
+	MsgBox, 262144,, Your dedupe is setup and ready to go - just choose where you want the distribution report to be saved!
+	Return
+
+}
+
+
+; #singleinstance force ; Needed, but already in file
+
+#F2:: ;c WinKey+F2 will bring up a help file, which attempts to automatically document the functions found here-in. It may go without saying, but I'm still working on it. :D
+{
+fileread content, %a_scriptfullpath%
+comment=
+loop parse, content,`n
+{
+ ifinstring a_loopfield,;c  ;;
+  ifnotinstring a_loopfield,;;
+ {
+  position := InStr(a_loopfield,";c") ;;
+  position +=1
+  stringtrimleft com,a_loopfield,%position%
+  comment =%comment%%com%`n`n
+ } 
+}
+  msgbox %comment%
+Return
+}
+
+
+
+
+
+
+
+
+
+
+
+
+SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to be safe I'm setting it here
+
+
+;===========================================================
+;==  Dedupe Module (Always active, but only when needed
+;===========================================================
+
+
+; #IfWinActive WinCrypt_Sync.ahk ; This is just here since I know it works,
+; it should be a way to verify that what I'm doing works
+#IfWinActive Merge/Edit Duplicate Records
+MouseSpeed = 3 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
+
+^NumpadAdd:: InputBox, MouseSpeed, Enter Speed Below, Current Speed: %MouseSpeed%
+
+
+
+
+
+
+
+XButton1::
+while GetKeyState("XButton1", "P") ; this loop only executes when the XButton is pressed down
+{
+    MouseSpeed = %MouseSpeed%
+    Send, {Down} ; this presses down only while the above condition is met
+    sleep, %MouseSpeed%
+}
+;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
+return
+
+
+XButton2::
+while GetKeyState("XButton2", "P") ; this loop only executes when the XButton is pressed down
+{
+    Send, {Up} ; this presses up only while the above condition is met
+}
+;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
+return
+
+
+MButton::
+   suspend, On
+   send {RButton}
+   sleep, 50
+   send g
+   sleep, 50
+   send u
+   suspend, Off
+return
+
+
+#IfWinActive DP Dashboard ahk_class AutoHotkeyGUI
+^space::Gui DPDashboard:Destroy
+Return
+#IfWinActive
 
 ;/*
-
-Progress, w250,,, Setting up your Dedupe - Please Hold Your Ponies
-
-; Start of Script, this chunk of text gets us INTO the indexes - RUN FROM BASE MM2010 WINDOW!
-Send, {CTRLDOWN}d{CTRLUP}
-WinWait, Distribution Report, 
-IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
-WinWaitActive, Distribution Report, 
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-
-Progress, 12
-
-; Possible modularity chance from here...
-
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZCLF2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],12) ; Sending ZCLF2
-
-Progress, 25
-
-; Creates ZLF2, sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZLF2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],5) ; Sending ZLF2
-
-Progress, 37
-
-; Creates ZLF, sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZLF{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[First Name_] ; Sending ZLF
-
-Progress, 50
-
-; Creates ZL2, sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZL2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[Add2_] ; Sending ZL2
-
-Progress, 62
-
-; Creates ZCL, sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZCL{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}Left([ZIP+4_],5)+Left([Company_],10)+Left([Last Name_],10) ; Sending ZCL
-
-Progress, 75
-
-; Creates ZDPL, sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, ZDPL{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
-
-
-; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, Z2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
-
-; to here.
-
-Progress, 90
-
-Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
-Send, Dedupe{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
-Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}[Source List] ; Naming Source List
-Send, {ALTDOWN}o{ALTUP}
-WinWait, Confirm, 
-IfWinNotActive, Confirm, , WinActivate, Confirm, 
-WinWaitActive, Confirm, 
-Send, y
-WinWait, Distribution Report, 
-IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
-WinWaitActive, Distribution Report, 
-Progress, 94
-Send, {SHIFTDOWN}{TAB}{SHIFTUP}dedupe{ALTDOWN}b{ALTUP}
-WinWait, Save Procedure Information, 
-IfWinNotActive, Save Procedure Information, , WinActivate, Save Procedure Information, 
-WinWaitActive, Save Procedure Information, 
-Sleep, 100
-Send, {ALTDOWN}d{ALTUP}
-
-Progress, 98
-
-;Printing the distribution report - this may need to change later
-
-WinWait, Distribution Report - Print, 
-IfWinNotActive, Distribution Report - Print, , WinActivate, Distribution Report - Print, 
-WinWaitActive, Distribution Report - Print, 
-Send, {ALTDOWN}n{ALTUP}adobe{ALTDOWN}o{ALTUP}{ENTER}
-
-; End of Script, exits back to "Indexes"
-Progress, 100
-Sleep, 10
-Progress, Off
-*/
-MsgBox, 262144,, Your dedupe is setup and ready to go - just choose where you want the distribution report to be saved!
-Return
-
-}
-
-
-
-
-
-
-
-; Random Notes that likely aren't needed:
-/*
-
-
-
-;This is the function-call. The part that tells autohotkey to execute the function below.
-;Check_ForUpdate(1)
-
-;The 1 tells the function to use 1 as the first paramater - setting "_ReplaceCurrentSCript" to 1.
-
-;This is the actual function.
-Check_ForUpdate(_ReplaceCurrentScript = 0, _SuppressMsgBox = 0, _CallbackFunction = "", ByRef _Information = "")
+Escape::
+GuiClose:
+CloseAllWindows: ; Close all and reset the GUI number
 {
-	 
-	;Version.ini file format
-	;
-	;[Info]
-	;Version=1.4
-	;URL=URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true or .exe
-	;MD5=00000000000000000000000000000000 or omit this key completly to skip the MD5 file validation
-	
-	Static Script_Name := "ShortcutToolkit" ;Your script name
-	, Version_Number := 0.01 ;The script's version number
-	, Update_URL := "URL=https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/Version.ini?raw=true" ;The URL of the version.ini file for your script
-	, Retry_Count := 3 ;Retry count for if/when anything goes wrong
-	
-	Random,Filler,10000000,99999999
-	Version_File := A_Temp . "\" . Filler . ".ini"
-	, Temp_FileName := A_Temp . "\" . Filler . ".tmp"
-	, VBS_FileName := A_Temp . "\" . Filler . ".vbs"
-	
-	Loop,% Retry_Count
-	{
-		_Information := ""
-		
-		UrlDownloadToFile,%Update_URL%,%Version_File%
-		
-		IniRead,Version,%Version_File%,Info,Version,N/A
-		
-		If (Version = "N/A"){
-			FileDelete,%Version_File%
-			If (A_Index = Retry_Count)
-				_Information .= "The version info file doesn't have a ""Version"" key in the ""Info"" section or the file can't be downloaded."
-			Else
-				Sleep,500
-			
-			Continue
-		}
-		
-		If (Version > Version_Number){
-			If (_SuppressMsgBox != 1 and _SuppressMsgBox != 3){
-				MsgBox,0x4,New version available,There is a new version of %Script_Name% available.`nCurrent version: %Version_Number%`nNew version: %Version%`n`nWould you like to download it now?
-				
-				IfMsgBox,Yes
-					MsgBox_Result := 1
-			}
-			
-			If (_SuppressMsgBox or MsgBox_Result){
-				IniRead,URL,%Version_File%,Info,URL,N/A
-				
-				If (URL = "N/A")
-					_Information .= "The version info file doesn't have a valid URL key."
-				Else {
-					SplitPath,URL,,,Extension
-					
-					If (Extension = "ahk" And A_AHKPath = "")
-						_Information .= "The new version of the script is an .ahk filetype and you do not have AutoHotKey installed on this computer.`r`nReplacing the current script is not supported."
-					Else If (Extension != "exe" And Extension != "ahk")
-						_Information .= "The new file to download is not an .EXE or an .AHK file type. Replacing the current script is not supported."
-					Else {
-						IniRead,MD5,%Version_File%,Info,MD5,N/A
-						
-						Loop,% Retry_Count
-						{
-							UrlDownloadToFile,%URL%,%Temp_FileName%
-							
-							IfExist,%Temp_FileName%
-							{
-								If (MD5 = "N/A"){
-									_Information .= "The version info file doesn't have a valid MD5 key."
-									, Success := True
-									Break
-								} Else {
-									H := DllCall("CreateFile","Str",Temp_FileName,"UInt",0x80000000,"UInt",3,"UInt",0,"UInt",3,"UInt",0,"UInt",0)
-									, VarSetCapacity(FileSize,8,0)
-									, DllCall("GetFileSizeEx","UInt",H,"Int64",&FileSize)
-									, FileSize := NumGet(FileSize,0,"Int64")
-									, FileSize := FileSize = -1 ? 0 : FileSize
-									
-									If (FileSize != 0){
-										VarSetCapacity(Data,FileSize,0)
-										, DllCall("ReadFile","UInt",H,"UInt",&Data,"UInt",FileSize,"UInt",0,"UInt",0)
-										, DllCall("CloseHandle","UInt",H)
-										, VarSetCapacity(MD5_CTX,104,0)
-										, DllCall("advapi32\MD5Init",Str,MD5_CTX)
-										, DllCall("advapi32\MD5Update",Str,MD5_CTX,"UInt",&Data,"UInt",FileSize)
-										, DllCall("advapi32\MD5Final",Str,MD5_CTX)
-										
-										FileMD5 := ""
-										Loop % StrLen(Hex:="123456789ABCDEF0")
-											N := NumGet(MD5_CTX,87+A_Index,"Char"), FileMD5 .= SubStr(Hex,N>>4,1) . SubStr(Hex,N&15,1)
-										
-										VarSetCapacity(Data,FileSize,0)
-										, VarSetCapacity(Data,0)
-										
-										If (FileMD5 != MD5){
-											FileDelete,%Temp_FileName%
-											
-											If (A_Index = Retry_Count)
-												_Information .= "The MD5 hash of the downloaded file does not match the MD5 hash in the version info file."
-											Else										
-												Sleep,500
-											
-											Continue
-										} Else
-											Success := True
-									} Else {
-										DllCall("CloseHandle","UInt",H)
-										Success := True
-									}
-								}
-							} Else {
-								If (A_Index = Retry_Count)
-									_Information .= "Unable to download the latest version of the file from " %URL% "."
-								Else
-									Sleep,500
-								Continue
-							}
-						}
-					}
-				}
-			}
-		} Else
-			_Information .= "No update was found."
-		
-		FileDelete,%Version_File%
-		Break
-	}
-	
-	If (_ReplaceCurrentScript And Success){
-		SplitPath,URL,,,Extension
-		Process,Exist
-		MyPID := ErrorLevel
-		
-		VBS_P1 =
-		(LTrim Join`r`n
-			On Error Resume Next
-			Set objShell = CreateObject("WScript.Shell")
-			objShell.Run "TaskKill -f -im %MyPID%", WindowStyle, WaitOnReturn
-			WScript.Sleep 1000
-			Set objFSO = CreateObject("Scripting.FileSystemObject")
-		)
-		
-		If (A_IsCompiled){
-			If (Extension = "exe"){
-				VBS_P2 =
-				(LTrim Join`r`n
-					objFSO.CopyFile "%Temp_FileName%", "%A_ScriptFullPath%", True
-					objFSO.DeleteFile "%Temp_FileName%", True
-					objShell.Run """%A_ScriptFullPath%"""
-				)
-				
-				Return_Val :=  Temp_FileName
-			} Else { ;Extension is ahk
-				SplitPath,A_ScriptFullPath,,FDirectory,,FName
-				FileMove,%Temp_FileName%,%FDirectory%\%FName%.ahk,1
-				FileDelete,%Temp_FileName%
-				
-				VBS_P2 =
-				(LTrim Join`r`n
-					objFSO.DeleteFile "%A_ScriptFullPath%", True
-					objShell.Run """%FDirectory%\%FName%.ahk"""
-				)
-				
-				Return_Val := FDirectory . "\" . FName . ".ahk"
-			}
-		} Else {
-			If (Extension = "ahk"){
-				FileMove,%Temp_FileName%,%A_ScriptFullPath%,1
-				If (Errorlevel)
-					_Information .= "Error (" Errorlevel ") unable to replace current script with the latest version."
-				Else {
-					VBS_P2 = 
-					(LTrim Join`r`n
-						objShell.Run """%A_ScriptFullPath%"""
-					)
-					
-					Return_Val :=  A_ScriptFullPath
-				}
-			} Else If (Extension = "exe"){
-				SplitPath,A_ScriptFullPath,,FDirectory,,FName
-				FileMove,%Temp_FileName%,%FDirectory%\%FName%.exe,1
-				FileDelete,%A_ScriptFullPath%
-				
-				VBS_P2 =
-				(LTrim Join`r`n
-					objShell.Run """%FDirectory%\%FName%.exe"""
-				)
-				
-				Return_Val :=  FDirectory . "\" . FName . ".exe"
-			} Else {
-				FileDelete,%Temp_FileName%
-				_Information .= "The downloaded file is not an .EXE or an .AHK file type. Replacing the current script is not supported."
-			}
-		}
-		
-		VBS_P3 =
-		(LTrim Join`r`n
-			objFSO.DeleteFile "%VBS_FileName%", True
-			Set objFSO = Nothing
-			Set objShell = Nothing
-		)
-		
-		If (_SuppressMsgBox < 2)
-			VBS_P3 .= "`r`nWScript.Echo ""Update complected successfully."""
-		
-		FileDelete,%VBS_FileName%
-		FileAppend,%VBS_P1%`r`n%VBS_P2%`r`n%VBS_P3%,%VBS_FileName%
-		
-		If (_CallbackFunction != ""){
-			If (IsFunc(_CallbackFunction))
-				%_CallbackFunction%()
-			Else
-				_Information .= "The callback function is not a valid function name."
-		}
-		
-		RunWait,%VBS_FileName%,%A_Temp%,VBS_PID
-		Sleep,2000
-		
-		Process,Close,%VBS_PID%
-		_Information := "Error (?) unable to replace current script with the latest version.`r`nPlease make sure your computer supports running .vbs scripts and that the script isn't running in a pipe."
-	}
-	
-	_Information := _Information = "" ? "None" : _Information
-	
-	MsgBox, TEST 2!
-	
-	Return Return_Val
+	Reload
+	ExitApp
 }
 
 
 
+/* 
+;===========================================================
+;==  NOTES
+;===========================================================
 
+~ = Passthrough, at least when used as a prefix for a button combo, so ~^c would be Ctrl+c that also sends the same command to the native system
+^ = Ctrl
+# = Win key (I think?)
+! = Alt Key (I think)
 
-
-GetUnP() ; In the future, I can make this more general by making FMAHK.config a passed argument
-{
-	While(vP1user ="")
-		{
-		InputBox, vP1user, Username Entry, Enter your Postal One Username,,,,,,,,Enter your PostalOne! Username
-		}
-	While(vP1pass ="")
-		{
-		InputBox, vP1pass, Password Entry, Enter your Postal One Password,,,,,,,,Enter your PostalOne! Password
-		}
-	FileDelete, %A_MyDocuments%\FMAHK.config
-	FileAppend, %vP1User%|||||%vP1Pass%, %A_MyDocuments%\FMAHK.config ; If I need new lines for some reason, add with this: `n
-	Return
-}
-
-
-:*:Jam`t::James Chase`t8023875157`t110
-:*:gh`t::Gary Henricksen
-:*:db`t::Dawn Brennan
-:*:gr`t::Ginny Ricker
-:*:cm`t::Carol Martin
-:*:bm`t::Brett Morrison
-:*:ec`t::Elyse Carter
-:*:ad`t::Anna Duca
-:*:jh`t::Jillian Hobday
-:*:kh`t::Kayla Hornbrook
-:*:shruggie`t::¯\_(ツ)_/¯
-:*:nonus`t::(Not ValidUSPSZIPCode(MainAddrGrp)) AND {ENTER}(Not InTable([State_], "Z:\Data Files\States.rpl"))
-SendMode Input
-:*:note`t::Note - Highlighted record(s) contain PO Box(s) - we're looking for a physical address and will get it to you ASAP
-:*:tabret`t::{CTRLDOWN}h{CTRLUP}\t{Tab}\r\n{ALTDOWN}ta{ALTUP}{ESCAPE}
-:*:prfsel`t::(Not Empty([Proofs])) AND {ENTER}([Proofs] Excludes "NOT A PROOF")
-; */
