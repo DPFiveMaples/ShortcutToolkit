@@ -21,10 +21,10 @@ vFirstRun := 1
 
 
 
-#IfWinActive DPDashboard ahk_class AutoHotkeyGUI
+#IfWinActive DP Dashboard ahk_class AutoHotkeyGUI
 ^space::
 {
-	Gui DPDashboard:Cancel
+	Gui DP Dashboard:Destroy
 	Return	
 }
 #IfWinActive

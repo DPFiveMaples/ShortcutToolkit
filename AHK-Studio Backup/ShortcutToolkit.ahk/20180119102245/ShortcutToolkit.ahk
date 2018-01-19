@@ -21,14 +21,6 @@ vFirstRun := 1
 
 
 
-#IfWinActive DPDashboard ahk_class AutoHotkeyGUI
-^space::
-{
-	Gui DPDashboard:Cancel
-	Return	
-}
-#IfWinActive
-
 :*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 
 
@@ -614,6 +606,14 @@ MButton::
 	suspend, Off
 return
 
+
+#IfWinActive DP Dashboard ahk_class AutoHotkeyGUI
+^space::
+{
+	Gui DPDashboard:Destroy
+	Return	
+}
+#IfWinActive
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
 ;Escape::
