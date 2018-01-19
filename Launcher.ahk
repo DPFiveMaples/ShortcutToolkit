@@ -1,7 +1,6 @@
 ; Where ALL of this is stored: https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
-
 IniRead,Current_ini,version.ini,Info,Version,N/A  ;This is the desktop version.ini which will be compared with the online version.ini. It assumes that the version.ini is in the same directory unless specified otherwise.
-Update_URL := "https://www.dropbox.com/s/keu8jhvgkvajka4/Version.ini?dl=1" ; "https://drive.google.com/uc?export=download&id=1OHgQ_oiUT5bCAAyLix-7LW6Z9QyBRajB" ;The URL of the online version.ini file for your script
+Update_URL := "https://www.dropbox.com/s/keu8jhvgkvajka4/Version.ini?dl=1" ; The URL of the online version.ini file for your script
 	
 Random,Filler,10000000,99999999
 	, Version_File := A_Temp . "\" . Filler . ".ini"

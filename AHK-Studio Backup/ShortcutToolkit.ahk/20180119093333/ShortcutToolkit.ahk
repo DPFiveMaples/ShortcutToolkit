@@ -4,7 +4,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 #SINGLEINSTANCE force
-;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
+;SetBatchLines, -1   ; Runs the script at max speed, default is 10 or 20 ms
 
 ; Consider putting a "First Run" quick tip upon first running the file - a quick 3 second splash screen that indicates to hit the "help" key to find out more.
 
@@ -36,7 +36,7 @@ Gui, New,,DP Dashboard
 Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:
 Gui, Add, Text,, JUST Dedupe Indexes:
 Gui, Add, Text,, Clipboard Manager:
-; Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
+; Gui, Add, Text,, Postal One! Login:    ; Come back for this one after release
 Gui, Add, Text,, WH NDC/SCF Info:
 Gui, Add, Button, ym, &Std Dedupe  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
 Gui, Add, Button,, &Just Dupe Indexes
@@ -86,7 +86,7 @@ clpb4len := StrLen(clpb4)
 StringTrimRight, clpbs4, clpb4, clpb4len - 50
 clpb5len := StrLen(clpb5)
 StringTrimRight, clpbs5, clpb5, clpb5len - 50
-; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied� every time someone copies.
+; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied… every time someone copies.
 sleep, 1000
 tooltip
 return
@@ -106,7 +106,7 @@ ButtonClipboardMgr:
 	StringTrimRight, clpbs4, clpb4, clpb4len - 50
 	clpb5len := StrLen(clpb5)
 	StringTrimRight, clpbs5, clpb5, clpb5len - 50
-	; inputbox, clpbNbr, which clipboard number do you want to have in your clipboard now?, 1: %clpbs1% 2: %clpbs2%`n3: %clpbs3% 4: %clpbs4%`n5: %clpbs5%`n	; In place originally, replaced with my GUI below
+	; inputbox, clpbNbr, which clipboard number do you want to have in your clipboard now?, 1: %clpbs1% 2: %clpbs2%`n3: %clpbs3% 4: %clpbs4%`n5: %clpbs5%`n   ; In place originally, replaced with my GUI below
 	Gui, New,,Choose your Clipboard
 	Gui, Add, Radio,vclpbNbr Checked,Clipboard #&1: %clpbs1%
 	Gui, Add, Radio,,Clipboard #&2: %clpbs2%
@@ -161,10 +161,10 @@ ButtonLogin:
 
 	Loop 
 	{
-	 Loop, read, %A_MyDocuments%\FMAHK.config
-		  last_line := USPSLogin|_|_|  
-	 if InStr(last_line,"login:")
-		  break
+    Loop, read, %A_MyDocuments%\FMAHK.config
+        last_line := USPSLogin|_|_|  
+    if InStr(last_line,"login:")
+        break
 	}
 MsgBox Found!
 
@@ -576,12 +576,12 @@ MouseSpeed = 3 ; This is a slowing modifier - the higher it is, the slower the d
 
 
 
-XButton1:: ;c The Foward & Backward Mouse buttons (if available) will navagate up and down your dedupe screen, and the middle mouse button will UNHIDE all dupes in the selected group.
+XButton1::
 while GetKeyState("XButton1", "P") ; this loop only executes when the XButton is pressed down
 {
-	 MouseSpeed = %MouseSpeed%
-	 Send, {Down} ; this presses down only while the above condition is met
-	 sleep, %MouseSpeed%
+    MouseSpeed = %MouseSpeed%
+    Send, {Down} ; this presses down only while the above condition is met
+    sleep, %MouseSpeed%
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
 return
@@ -590,29 +590,26 @@ return
 XButton2::
 while GetKeyState("XButton2", "P") ; this loop only executes when the XButton is pressed down
 {
-	 Send, {Up} ; this presses up only while the above condition is met
+    Send, {Up} ; this presses up only while the above condition is met
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
 return
 
 
 MButton::
-	suspend, On
-	send {RButton}
-	sleep, 50
-	send g
-	sleep, 50
-	send u
-	suspend, Off
+   suspend, On
+   send {RButton}
+   sleep, 50
+   send g
+   sleep, 50
+   send u
+   suspend, Off
 return
 
 
 #IfWinActive DP Dashboard ahk_class AutoHotkeyGUI
-^space::
-{
-	Gui DPDashboard:Destroy
-	Return	
-}
+^space::Gui DPDashboard:Destroy
+Return
 #IfWinActive
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
