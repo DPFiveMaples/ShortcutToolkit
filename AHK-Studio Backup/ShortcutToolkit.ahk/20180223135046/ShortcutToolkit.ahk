@@ -39,21 +39,21 @@ vFirstRun := 1
 
 ^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands (will also close it if it's open)
 {
-	
-	Gui, New,,DP Dashboard
-	Gui, Add, Text,, JUST Dedupe Indexes:
-;	Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:   ; Will come back for this once I've excised the PDF part.
-	Gui, Add, Text,, Clipboard Manager:
+
+Gui, New,,DP Dashboard
+Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:
+Gui, Add, Text,, JUST Dedupe Indexes:
+Gui, Add, Text,, Clipboard Manager:
 ; Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
-	Gui, Add, Text,, WH NDC/SCF Info:
-	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
-;	Gui, Add, Button,, &Std Dedupe
-	Gui, Add, Button, default, &ClipboardMgr
+Gui, Add, Text,, WH NDC/SCF Info:
+Gui, Add, Button, ym, &Std Dedupe  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
+Gui, Add, Button,, &Just Dupe Indexes
+Gui, Add, Button, default, &ClipboardMgr
 ;Gui, Add, Button,, &Login ; Come back for this one after release
-	Gui, Add, Button,, &WHIMB
-	Gui, Show,,DP Dashboard
-	return  ; End of auto-execute section. The script is idle until the user does something.
-	
+Gui, Add, Button,, &WHIMB
+Gui, Show,,DP Dashboard
+return  ; End of auto-execute section. The script is idle until the user does something.
+
 }
 
 
@@ -555,20 +555,6 @@ Return
 
 
 
-;===========================================================
-;==  Update Module
-;===========================================================
-
-
-^+#u:: ;c Typing Ctrl+Shift+Win+u
-{
-	UrlDownloadToFile, https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1, ShortcutToolkit.ahk ;*[ShortcutToolkit]
-	MsgBox Hold yer ponies,  I'm updating.
-	Reload
-	ExitApp
-}
-
-
 
 
 
@@ -581,11 +567,12 @@ SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to 
 
 
 ;===========================================================
-;==  Dedupe Module (Always active, but only where needed)
+;==  Dedupe Module (Always active, but only when needed
 ;===========================================================
 
 
-
+; #IfWinActive WinCrypt_Sync.ahk ; This is just here since I know it works,
+; it should be a way to verify that what I'm doing works
 #IfWinActive Merge/Edit Duplicate Records
 MouseSpeed = 3 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
 
