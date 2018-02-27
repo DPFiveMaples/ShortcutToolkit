@@ -79,7 +79,6 @@ CloseAllWindows: ; Close all and reset the GUI number
 ;==  Clipboard Management
 ;===========================================================
 
-~^x::
 ~^c::
 {
 sleep, 100
