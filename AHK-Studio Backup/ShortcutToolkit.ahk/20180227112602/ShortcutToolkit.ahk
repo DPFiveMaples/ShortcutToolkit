@@ -30,17 +30,17 @@ vFirstRun := 1
 ;===========================================================
 
 
-#IfWinActive ahk_class AutoHotkeyGUI
+#IfWinExist DP Dashboard 
 ^space::
 {
-	Gui DPDashboard:Cancel
+	;Gui DPDashboard:Cancel
 	Gui, submit
 	Return	
 }
 
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-GuiEscape:
+;Escape::
 GuiClose:
 CloseAllWindows: ; Close all and reset the GUI number
 {
@@ -50,13 +50,13 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Return	
 }
 
-#IfWinActive
+
 
 ;===========================================================
 ;==  DP Dashboard
 ;===========================================================
 
-#IfWinNotExist DP Dashboard 
+#IfWinNotExist DPDashboard 
 ^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
 {
 	
@@ -75,7 +75,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 	return  ; End of auto-execute section. The script is idle until the user does something.
 	
 }
-
+#IfWinActive
 
 
 ;===========================================================

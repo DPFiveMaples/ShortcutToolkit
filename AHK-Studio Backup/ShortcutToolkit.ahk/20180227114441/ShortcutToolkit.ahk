@@ -30,7 +30,7 @@ vFirstRun := 1
 ;===========================================================
 
 
-#IfWinActive ahk_class AutoHotkeyGUI
+#IfWinExist DP Dashboard 
 ^space::
 {
 	Gui DPDashboard:Cancel
@@ -40,8 +40,9 @@ vFirstRun := 1
 
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-GuiEscape:
+
 GuiClose:
+~Escape:
 CloseAllWindows: ; Close all and reset the GUI number
 {
 	;Reload
@@ -50,7 +51,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Return	
 }
 
-#IfWinActive
+
 
 ;===========================================================
 ;==  DP Dashboard
@@ -75,7 +76,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 	return  ; End of auto-execute section. The script is idle until the user does something.
 	
 }
-
+#IfWinActive
 
 
 ;===========================================================

@@ -40,7 +40,7 @@ vFirstRun := 1
 
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-GuiEscape:
+~Escape:
 GuiClose:
 CloseAllWindows: ; Close all and reset the GUI number
 {

@@ -17,30 +17,25 @@ MsgBox, Hit Win+F2 to learn moar!
 vFirstRun := 1
 */
 
+; Where ALL of this is stored on Dropbox (update there to trigger propigation): https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
 
-;===========================================================
-;==  Useful Hotkeys Section
-;==========================================================
-
-:*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
-:*:shruggie`t::¯\_(ツ)_/¯
 
 ;===========================================================
 ;==  Exit/Escape Section
 ;===========================================================
 
 
-#IfWinActive ahk_class AutoHotkeyGUI
+#IfWinActive DPDashboard 
 ^space::
 {
-	Gui DPDashboard:Cancel
+	;Gui DPDashboard:Cancel
 	Gui, submit
 	Return	
 }
 
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-GuiEscape:
+;Escape::
 GuiClose:
 CloseAllWindows: ; Close all and reset the GUI number
 {
@@ -49,15 +44,17 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Gui, submit
 	Return	
 }
-
 #IfWinActive
+
+:*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
+
 
 ;===========================================================
 ;==  DP Dashboard
 ;===========================================================
 
-#IfWinNotExist DP Dashboard 
-^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
+
+^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands (will also close it if it's open)
 {
 	
 	Gui, New,,DP Dashboard
