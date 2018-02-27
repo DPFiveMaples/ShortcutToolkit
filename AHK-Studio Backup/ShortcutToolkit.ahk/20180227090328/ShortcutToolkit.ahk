@@ -20,28 +20,11 @@ vFirstRun := 1
 ; Where ALL of this is stored on Dropbox (update there to trigger propigation): https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
 
 
-;===========================================================
-;==  Exit/Escape Section
-;===========================================================
-
 
 #IfWinActive DPDashboard ahk_class AutoHotkeyGUI
 ^space::
 {
-	;Gui DPDashboard:Cancel
-	Gui, submit
-	Return	
-}
-
-
-;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-;Escape::
-GuiClose:
-CloseAllWindows: ; Close all and reset the GUI number
-{
-	;Reload
-	;ExitApp
-	Gui, submit
+	Gui DPDashboard:Cancel
 	Return	
 }
 #IfWinActive
@@ -644,6 +627,15 @@ MButton::
 	suspend, Off
 return
 
+
+;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
+;Escape::
+GuiClose:
+CloseAllWindows: ; Close all and reset the GUI number
+{
+	Reload
+	ExitApp
+}
 
 
 

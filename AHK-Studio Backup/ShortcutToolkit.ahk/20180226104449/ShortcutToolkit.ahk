@@ -20,28 +20,11 @@ vFirstRun := 1
 ; Where ALL of this is stored on Dropbox (update there to trigger propigation): https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
 
 
-;===========================================================
-;==  Exit/Escape Section
-;===========================================================
-
 
 #IfWinActive DPDashboard ahk_class AutoHotkeyGUI
 ^space::
 {
-	;Gui DPDashboard:Cancel
-	Gui, submit
-	Return	
-}
-
-
-;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-;Escape::
-GuiClose:
-CloseAllWindows: ; Close all and reset the GUI number
-{
-	;Reload
-	;ExitApp
-	Gui, submit
+	Gui DPDashboard:Cancel
 	Return	
 }
 #IfWinActive
@@ -63,9 +46,9 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Gui, Add, Text,, Clipboard Manager:
 ; Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
 	Gui, Add, Text,, WH NDC/SCF Info:
-	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonJustDupeIndexes (if it exists) will be run when the button is pressed.
+	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonStdDedupe (if it exists) will be run when the button is pressed.
 	Gui, Add, Button,, &Std Dedupe
-	Gui, Add, Button, default, &ClipboardMgr
+s	Gui, Add, Button, default, &ClipboardMgr
 ;Gui, Add, Button,, &Login ; Come back for this one after release
 	Gui, Add, Button,, &WHIMB
 	Gui, Show,,DP Dashboard
@@ -535,14 +518,14 @@ SetupStdDedupe()
 	WinWait, Distribution Report - Print, 
 	IfWinNotActive, Distribution Report - Print, , WinActivate, Distribution Report - Print, 
 	WinWaitActive, Distribution Report - Print, 
-	;Send, {ALTDOWN}n{ALTUP}adobe{ALTDOWN}o{ALTUP}{ENTER}
+	Send, {ALTDOWN}n{ALTUP}adobe{ALTDOWN}o{ALTUP}{ENTER}
 
 	; End of Script, exits back to "Indexes"
 	Progress, 100
 	Sleep, 10
 	Progress, Off
 	*/
-	MsgBox, 262144,, Your dedupe is setup and ready to go - just choose where you want the distribution report to be printed!
+	MsgBox, 262144,, Your dedupe is setup and ready to go - just choose where you want the distribution report to be saved!
 	Return
 
 }
@@ -577,10 +560,10 @@ Return
 ;===========================================================
 
 
-^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
+^+#u:: ;c Typing Ctrl+Shift+Win+u
 {
 	UrlDownloadToFile, https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1, ShortcutToolkit.ahk ;*[ShortcutToolkit]
-	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
+	MsgBox Hold yer ponies,  I'm updating.
 	Reload
 	ExitApp
 }
@@ -644,6 +627,15 @@ MButton::
 	suspend, Off
 return
 
+
+;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
+;Escape::
+GuiClose:
+CloseAllWindows: ; Close all and reset the GUI number
+{
+	Reload
+	ExitApp
+}
 
 
 

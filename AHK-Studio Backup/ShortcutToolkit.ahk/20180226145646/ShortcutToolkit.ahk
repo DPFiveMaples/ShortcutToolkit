@@ -20,28 +20,11 @@ vFirstRun := 1
 ; Where ALL of this is stored on Dropbox (update there to trigger propigation): https://www.dropbox.com/sh/rytpiimr5snjnbk/AAB_nORecls7kcCB5ldlV-tAa?dl=0
 
 
-;===========================================================
-;==  Exit/Escape Section
-;===========================================================
-
 
 #IfWinActive DPDashboard ahk_class AutoHotkeyGUI
 ^space::
 {
-	;Gui DPDashboard:Cancel
-	Gui, submit
-	Return	
-}
-
-
-;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
-;Escape::
-GuiClose:
-CloseAllWindows: ; Close all and reset the GUI number
-{
-	;Reload
-	;ExitApp
-	Gui, submit
+	Gui DPDashboard:Cancel
 	Return	
 }
 #IfWinActive
@@ -577,10 +560,10 @@ Return
 ;===========================================================
 
 
-^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
+^+#u:: ;c Typing Ctrl+Shift+Win+u
 {
 	UrlDownloadToFile, https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1, ShortcutToolkit.ahk ;*[ShortcutToolkit]
-	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
+	MsgBox Hold yer ponies,  I'm updating.
 	Reload
 	ExitApp
 }
@@ -644,6 +627,15 @@ MButton::
 	suspend, Off
 return
 
+
+;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
+;Escape::
+GuiClose:
+CloseAllWindows: ; Close all and reset the GUI number
+{
+	Reload
+	ExitApp
+}
 
 
 
