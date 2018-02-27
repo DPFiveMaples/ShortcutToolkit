@@ -575,12 +575,11 @@ Return
 ;===========================================================
 ;==  Update Module
 ;===========================================================
-; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
-; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
+
 
 ^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
 {
-	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
+	UrlDownloadToFile, https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1, ShortcutToolkit.ahk ;*[ShortcutToolkit]
 	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
 	Reload
 	ExitApp
