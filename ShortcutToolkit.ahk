@@ -640,14 +640,44 @@ return
 
 
 MButton::
-	suspend, On
-	send {RButton}
-	sleep, 50
-	send g
-	sleep, 50
-	send u
-	suspend, Off
+suspend, On
+send {RButton}
+sleep, 50
+send g
+sleep, 50
+send u
+suspend, Off
 return
+
+;====================================================
+;=== The following section totally WORKS - it's just
+;=== been disabled because I don't need it. Simply
+;=== delete the two indicated comment marks (or the
+;=== whole lines) to re-enable. Thanks!  -Past Marv
+;====================================================
+
+/* ; <-- Delete this line to re-enable as well as the bottom one
+WheelDown::
+;while GetKeyState("WheelDown", "P") ; this loop only executes when the XButton is pressed down
+Loop, 10
+{
+    MouseSpeed = %MouseSpeed%
+    Send, {Down} ; this presses down only while the above condition is met
+    sleep, %MouseSpeed%
+}
+;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
+return
+
+WheelUp::
+;while GetKeyState("WheelUp", "P") ; this loop only executes when the XButton is pressed down
+Loop, 5
+{
+    Send, {Up} ; this presses up only while the above condition is met
+}
+;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
+return
+*/ ; <-- Delete this line to re-enable as well as the top one
+
 
 
 
