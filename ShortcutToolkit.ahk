@@ -1,10 +1,24 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases, prevents checking empty variables
+﻿;==========================================================
+;==  Boilerplate
+;==========================================================
+
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases, prevents checking empty variables
 ; #Warn  ; Enable warnings to assist with detecting common errors.
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 #SINGLEINSTANCE force
 ;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
+
+;==========================================================
+;==  GENERAL NOTES
+;==========================================================
+
+; Key	Syntax
+; Alt       !
+; Ctrl	    ^
+; Shift	    +
+; Win Logo	#
 
 ; Consider putting a "First Run" quick tip upon first running the file - a quick 3 second splash screen that indicates to hit the "help" key to find out more.
 
@@ -18,12 +32,49 @@ vFirstRun := 1
 */
 
 
+
 ;===========================================================
+;==  Update Module
+;===========================================================
+; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
+; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
+
+^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
+{
+	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
+	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
+	Reload
+	ExitApp
+}
+
+
+
+;==========================================================
 ;==  Useful Hotkeys Section
 ;==========================================================
 
+#F2:: ;c WinKey+F2 will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
+{
+fileread content, %a_scriptfullpath%
+comment=
+loop parse, content,`n
+{
+ ifinstring a_loopfield,;c  ;;
+  ifnotinstring a_loopfield,;;
+ {
+  position := InStr(a_loopfield,";c") ;;
+  position +=1
+  stringtrimleft com,a_loopfield,%position%
+  comment =%comment%%com%`n`n
+ } 
+}
+  msgbox %comment%
+Return
+}
+
 :*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 :*:shruggie`t::¯\_(ツ)_/¯
+^!'::’ ;c Ctrl+Alt+' (Apostrophe) - this will insert a Dartmouth apostreophe, instead of a regular one.
 
 ;===========================================================
 ;==  Exit/Escape Section
@@ -553,50 +604,6 @@ SetupStdDedupe()
 
 
 ; #singleinstance force ; Needed, but already in file
-
-#F2:: ;c WinKey+F2 will bring up a help file, which attempts to automatically document the functions found here-in. It may go without saying, but I'm still working on it. :D
-{
-fileread content, %a_scriptfullpath%
-comment=
-loop parse, content,`n
-{
- ifinstring a_loopfield,;c  ;;
-  ifnotinstring a_loopfield,;;
- {
-  position := InStr(a_loopfield,";c") ;;
-  position +=1
-  stringtrimleft com,a_loopfield,%position%
-  comment =%comment%%com%`n`n
- } 
-}
-  msgbox %comment%
-Return
-}
-
-
-
-
-;===========================================================
-;==  Update Module
-;===========================================================
-; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
-; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
-
-^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
-{
-	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
-	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
-	Reload
-	ExitApp
-}
-
-
-
-
-
-
-
-
 
 
 SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to be safe I'm setting it here
