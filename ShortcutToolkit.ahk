@@ -9,6 +9,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 #SINGLEINSTANCE force
 MouseSpeed = 30 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
+MouseSUp = 15
+MouseSDown = 30
 ;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
 
 ;==========================================================
@@ -619,8 +621,13 @@ SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to 
 #IfWinActive Merge/Edit Duplicate Records
 
 
-^NumpadAdd:: InputBox, MouseSpeed, Enter Speed Below, Current Speed: %MouseSpeed%
-
+^NumpadAdd::
+{
+InputBox, MouseSpeed, Enter Speed Below, Current Speed: %MouseSpeed%
+MouseSUp = (%MouseSpeed% / 2)
+MouseSDown = %MouseSpeed%
+Return
+}
 
 
 
