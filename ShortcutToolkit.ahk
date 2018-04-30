@@ -624,6 +624,8 @@ SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to 
 ^NumpadAdd::
 {
 InputBox, MouseSpeed, Enter Speed Below, Current Speed: %MouseSpeed%
+If MouseSpeed < 1
+	MouseSpeed = 20
 MouseSUp = (%MouseSpeed% / 2)
 MouseSDown = %MouseSpeed%
 Return
