@@ -1,4 +1,10 @@
 ﻿;==========================================================
+;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
+;==========================================================
+
+8
+
+;==========================================================
 ;==  Boilerplate
 ;==========================================================
 
@@ -42,6 +48,15 @@ vFirstRun := 1
 ; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
 ; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
+
+UpdateScriptTest:
+^+#t::
+{
+FileReadLine, 5, C:\My Documents\ContactList.txt, %A_Index%
+}
+
+
+UpdateScript:
 ^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
 {
 	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
