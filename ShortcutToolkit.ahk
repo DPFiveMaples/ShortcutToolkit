@@ -1,9 +1,11 @@
-﻿;==========================================================
+﻿/*;==========================================================
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 
 8
 
+
+*/
 ;==========================================================
 ;==  Boilerplate
 ;==========================================================
@@ -52,7 +54,12 @@ vFirstRun := 1
 UpdateScriptTest:
 ^+#t::
 {
-FileReadLine, 5, C:\My Documents\ContactList.txt, %A_Index%
+CurrentVer = 0
+NewVer = 0
+FileReadLine, 5, ShortcutToolkit.ahk, %CurrentVer%
+FileReadLine, 5, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, %NewVer%
+MsgBox, %CurrentVer% & %NewVer%
+Return
 }
 
 
