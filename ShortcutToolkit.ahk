@@ -8,6 +8,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #Persistent
 #SINGLEINSTANCE force
+MouseSpeed = 30 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
 ;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
 
 ;==========================================================
@@ -616,7 +617,7 @@ SetTitleMatchMode, 2 ; I could likely make the whole document this, but just to 
 
 
 #IfWinActive Merge/Edit Duplicate Records
-MouseSpeed = 3 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
+
 
 ^NumpadAdd:: InputBox, MouseSpeed, Enter Speed Below, Current Speed: %MouseSpeed%
 
@@ -642,9 +643,9 @@ while GetKeyState("XButton2", "P") ; this loop only executes when the XButton is
 {
 	 Send, {Up} ; this presses up only while the above condition is met
 	 ; Try this next time Marv:
-	 ;MouseSpeed = (%MouseSpeed% / 2)
-	 ;Send, {Up} ; this presses down only while the above condition is met
-	 ;sleep, %MouseSpeed%
+	 ; MouseSpeed = (%MouseSpeed% / 2)
+	 Send, {Up} ; this presses down only while the above condition is met
+	 sleep, (%MouseSpeed% / 2)     ; OLD VERSION: sleep, %MouseSpeed%
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
 return
