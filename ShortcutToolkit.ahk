@@ -643,9 +643,10 @@ while GetKeyState("XButton2", "P") ; this loop only executes when the XButton is
 {
 	 Send, {Up} ; this presses up only while the above condition is met
 	 ; Try this next time Marv:
-	 ; MouseSpeed = (%MouseSpeed% / 2)
+	 ;MouseSpeed = (%MouseSpeed% / 2)
 	 Send, {Up} ; this presses down only while the above condition is met
-	 sleep, (%MouseSpeed% / 2)     ; OLD VERSION: sleep, %MouseSpeed%
+	 sleep, %MouseSpeed%   ; OLD VERSION: sleep, %MouseSpeed%   ;sleep, (%MouseSpeed% / 2)     
+	 ;MouseSpeed = (%MouseSpeed% / 0.5)
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
 return
