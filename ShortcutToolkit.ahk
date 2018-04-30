@@ -678,7 +678,7 @@ return
 ;=== whole lines) to re-enable. Thanks!  -Past Marv
 ;====================================================
 
-/* ; <-- Delete this line to re-enable as well as the bottom one
+;/* ; <-- Delete this line to re-enable as well as the bottom one
 WheelDown::
 ;while GetKeyState("WheelDown", "P") ; this loop only executes when the XButton is pressed down
 Loop, 10
@@ -698,7 +698,7 @@ Loop, 5
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
 return
-*/ ; <-- Delete this line to re-enable as well as the top one
+;*/ ; <-- Delete this line to re-enable as well as the top one
 
 
 
