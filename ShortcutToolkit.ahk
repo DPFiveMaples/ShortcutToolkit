@@ -52,10 +52,23 @@ vFirstRun := 1
 ; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
 ; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
+SetTimer UpdateCheck, 60000 ; Check each min
+Return
+
+UpdateCheck:
+If (A_Hour = 01 And A_Min = 15)
+	{
+	Progress, w250,,, Hold yer ponies,  I'm updating…
+	Sleep, 2000
+	gosub VersionCheck
+	}
+Return
+
+If (A_Hour = 02)
 
 
 
-UpdateScriptTest:
+VersionCheck:
 ^+#t::
 {
 ; IniRead, OutputVar, C:\Temp\myfile.ini, section2, key
@@ -66,10 +79,9 @@ IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
 UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ;*[ShortcutToolkit]
 IniRead, NewVer, JunkKit.ahk, INI_Section, version
 FileDelete, JunkKit.ahk
-;MsgBox, %CurrentVer% & %NewVer%
 if (CurrentVer < NewVer)
 	{
-	MsgBox, %CurrentVer% & %NewVer%
+	;MsgBox, %CurrentVer% & %NewVer%
 	gosub UpdateScript
 	Return
 	}
@@ -81,7 +93,8 @@ UpdateScript:
 ^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
 {
 	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
-	MsgBox Hold yer ponies,  I'm updating - please count to 5 and then click 'OK'.
+	;Progress, w250,,, Hold yer ponies,  I'm updating…
+	MsgBox If you see me, I either just updated when you triggered me to, or I updated last night. Either way, please click 'OK', and go about your day!
 	Reload
 	ExitApp
 }
