@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=8
+version=9
 
 
 */
@@ -63,8 +63,15 @@ UpdateScriptTest:
 ; FileReadLine, %CurrentVer%, ShortcutToolkit.ahk, 5
 ; FileReadLine, %NewVer%, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, 5
 IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
-IniRead, NewVer, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, INI_Section, version
-MsgBox, %CurrentVer% & %NewVer%
+UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ;*[ShortcutToolkit]
+IniRead, NewVer, JunkKit.ahk, INI_Section, version
+FileDelete, JunkKit.ahk
+;MsgBox, %CurrentVer% & %NewVer%
+if (CurrentVer < NewVer)
+	{
+	gosub UpdateScript
+	Return
+	}
 Return
 }
 
