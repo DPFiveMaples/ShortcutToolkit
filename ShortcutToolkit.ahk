@@ -52,8 +52,10 @@ vFirstRun := 1
 ; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
 ; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
-SetTimer UpdateCheck, 60000 ; Check each min
-Return
+;SetTimer UpdateCheck, 60000 ; Check each minute
+;Return
+
+
 
 UpdateCheck:
 If (A_Hour = 01 And A_Min = 15)
@@ -64,12 +66,26 @@ If (A_Hour = 01 And A_Min = 15)
 	}
 Return
 
-If (A_Hour = 02)
+; The following is for testing ONLY, and shouldn't be used otherwise.
+/*
+SetTimer UpdateCheckTest, 1000 ; Check each second
+Return
+
+UpdateCheckTest:
+If (A_Hour = 13)
+	{
+	Msgbox, Hey!
+	Progress, w250,,, Hold yer ponies,  I'm updating…
+	Sleep, 10000
+	gosub VersionCheck
+	}
+Return
+*/
 
 
 
 VersionCheck:
-^+#t::
+^+#t:: ;c If you didn't trigger this window by pressing 'Win+F2,
 {
 ; IniRead, OutputVar, C:\Temp\myfile.ini, section2, key
 ; MsgBox, The value is %OutputVar%.
@@ -101,7 +117,7 @@ UpdateScript:
 
 
 ;==========================================================
-;==  Useful Hotkeys Section
+;==  Help File Section
 ;==========================================================
 
 #F2:: ;c WinKey+F2 will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
@@ -122,6 +138,11 @@ loop parse, content,`n
   msgbox %comment%
 Return
 }
+
+;==========================================================
+;==  Useful Hotkeys Section
+;==========================================================
+
 
 :*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 :*:shruggie`t::¯\_(ツ)_/¯
