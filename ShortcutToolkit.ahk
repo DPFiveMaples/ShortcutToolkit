@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=9
+version=10
 
 
 */
@@ -81,8 +81,7 @@ IniRead, NewVer, JunkKit.ahk, INI_Section, version
 FileDelete, JunkKit.ahk
 if (CurrentVer < NewVer)
 	{
-	;MsgBox, %CurrentVer% & %NewVer%
-	gosub UpdateScript
+	gosub UpdateScript ; Insert the following above if you need to check anything in the future: MsgBox, %CurrentVer% & %NewVer%
 	Return
 	}
 Return
@@ -90,11 +89,11 @@ Return
 
 
 UpdateScript:
-^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script.
+^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
 {
 	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
 	;Progress, w250,,, Hold yer ponies,  I'm updating…
-	MsgBox If you see me, I either just updated when you triggered me to, or I updated last night. Either way, please click 'OK', and go about your day!
+	MsgBox If you see me, I either just updated when you triggered me to, or I updated last night. Either way, please click 'OK', and go about your day! Also, press 'Win+F2' to open up a quick help cheat-sheet.
 	Reload
 	ExitApp
 }
