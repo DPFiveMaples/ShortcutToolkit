@@ -62,6 +62,7 @@ If (A_Hour = 01 And A_Min = 15)
 	{
 	Progress, w250,,, Hold yer ponies,  I'm updating…
 	Sleep, 2000
+	Progress, off
 	gosub VersionCheck
 	}
 Return
@@ -77,6 +78,7 @@ If (A_Hour = 13)
 	Msgbox, Hey!
 	Progress, w250,,, Hold yer ponies,  I'm updating…
 	Sleep, 10000
+	Progress, off
 	gosub VersionCheck
 	}
 Return
