@@ -70,6 +70,7 @@ FileDelete, JunkKit.ahk
 if (CurrentVer < NewVer)
 	{
 	gosub UpdateScript
+	MsgBox, %CurrentVer% & %NewVer%
 	Return
 	}
 Return
