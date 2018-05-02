@@ -1,8 +1,8 @@
 ﻿/*;==========================================================
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
-
-8
+[INI_Section]
+version=8
 
 
 */
@@ -19,6 +19,8 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 MouseSpeed = 30 ; This is a slowing modifier - the higher it is, the slower the down button goes, default is 15
 MouseSUp = 15
 MouseSDown = 30
+CurrentVer = 0
+NewVer = 0
 ;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
 
 ;==========================================================
@@ -51,13 +53,17 @@ vFirstRun := 1
 ; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
 
+
+
 UpdateScriptTest:
 ^+#t::
 {
-CurrentVer = 0
-NewVer = 0
-FileReadLine, 5, ShortcutToolkit.ahk, %CurrentVer%
-FileReadLine, 5, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, %NewVer%
+; IniRead, OutputVar, C:\Temp\myfile.ini, section2, key
+; MsgBox, The value is %OutputVar%.
+; FileReadLine, %CurrentVer%, ShortcutToolkit.ahk, 5
+; FileReadLine, %NewVer%, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, 5
+IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
+IniRead, NewVer, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, INI_Section, version
 MsgBox, %CurrentVer% & %NewVer%
 Return
 }
