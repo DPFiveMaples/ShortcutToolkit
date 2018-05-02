@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=9
+version=8
 
 
 */
@@ -69,8 +69,8 @@ FileDelete, JunkKit.ahk
 ;MsgBox, %CurrentVer% & %NewVer%
 if (CurrentVer < NewVer)
 	{
-	gosub UpdateScript
 	MsgBox, %CurrentVer% & %NewVer%
+	gosub UpdateScript
 	Return
 	}
 Return
