@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=10
+version=11
 
 
 */
@@ -87,7 +87,7 @@ Return
 
 
 VersionCheck:
-^+#t:: ;c If you didn't trigger this window by pressing 'Win+F2,
+^+#t:: ;c If you didn't trigger this window by pressing 'Win+F2', then it must mean that you had an update last night! Yay! (you can click OK)
 {
 ; IniRead, OutputVar, C:\Temp\myfile.ini, section2, key
 ; MsgBox, The value is %OutputVar%.
@@ -148,7 +148,7 @@ Return
 
 :*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 :*:shruggie`t::¯\_(ツ)_/¯
-^!'::’ ;c Ctrl+Alt+' (Apostrophe) - this will insert a Dartmouth apostreophe, instead of a regular one.
+^!'::’ ;c Ctrl+Alt+' (Apostrophe) - this will insert a Dartmouth apostrophe, instead of a regular one.
 
 ;===========================================================
 ;==  Exit/Escape Section
@@ -189,12 +189,12 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Gui, Add, Text,, JUST Dedupe Indexes:
 	Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:   ; Will come back for this once I've excised the PDF part.
 	Gui, Add, Text,, Clipboard Manager:
-; Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
+	Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
 	Gui, Add, Text,, WH NDC/SCF Info:
 	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonJustDupeIndexes (if it exists) will be run when the button is pressed.
 	Gui, Add, Button,, &Std Dedupe
 	Gui, Add, Button, default, &ClipboardMgr
-;Gui, Add, Button,, &Login ; Come back for this one after release
+	Gui, Add, Button,, &Login ; Come back for this one after release
 	Gui, Add, Button,, &WHIMB
 	Gui, Show,,DP Dashboard
 	return  ; End of auto-execute section. The script is idle until the user does something.
@@ -293,9 +293,17 @@ Return
 }
 
 
+;===========================================================
+;==  Postal One! Login Button (label: ButtonLogin)
+;===========================================================
+
+ButtonLogin:
+{
+	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
+}
 
 
-
+/*
 ButtonLogin:
 {
 	Gui, Submit
@@ -327,6 +335,8 @@ MsgBox Found!
 
 	Return
 }
+*/
+
 
 GetUnP(vPurposeKey) ; vPurposeKey will be used to differentiate between the different records in the DB.
 {
