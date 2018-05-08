@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=11
+version=12
 
 
 */
@@ -189,7 +189,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Gui, Add, Text,, JUST Dedupe Indexes:
 	Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:   ; Will come back for this once I've excised the PDF part.
 	Gui, Add, Text,, Clipboard Manager:
-	Gui, Add, Text,, Postal One! Login:	 ; Come back for this one after release
+	Gui, Add, Text,, TESTING: Postal One! Login:	 ; Come back for this one after release
 	Gui, Add, Text,, WH NDC/SCF Info:
 	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonJustDupeIndexes (if it exists) will be run when the button is pressed.
 	Gui, Add, Button,, &Std Dedupe
