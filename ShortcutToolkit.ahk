@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=12
+version=13
 
 
 */
@@ -299,7 +299,9 @@ Return
 
 ButtonLogin:
 {
+	Gui, Submit 
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
+	Return
 }
 
 
