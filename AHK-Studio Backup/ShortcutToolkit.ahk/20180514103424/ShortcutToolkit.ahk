@@ -207,6 +207,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 ;==  Clipboard Management
 ;===========================================================
 
+LaunchClipMgr:
 ~^x::
 ~^c::
 {
@@ -373,64 +374,18 @@ Return
 ;===========================================================
 
 
-#+^m:: ; Ctrl+Win+Shift+m
+#+^m::
 {
-	Send, ^c
-	sleep,  50
-
-	If clipboard != %A_MM%/%A_DD%/%A_YYYY% ; If they are different...
-	{
-		MsgBox, %clipboard% FAILS to match today's date (%A_MM%/%A_DD%/%A_YYYY%)
-	}
-	Else If clipboard = %A_MM%/%A_DD%/%A_YYYY% ; If they are the same...
-	{
-		;MsgBox, %clipboard% matches today's date of %A_MM%/%A_DD%/%A_YYYY%
-		;/*
-		sleep,  50
-		EnterDate := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		ClientName := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		Package := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		FileName := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		MailQty := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		MailDate := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		Salutation := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		ClientEmail := clipboard
-		Send, {TAB}
-		sleep,  20
-		Send, ^c
-		sleep,  50
-		MsgBox, %EnterDate%,  %ClientName% %Package% %FileName% %MailQty% %MailDate% %Salutation% %ClientEmail%
-		;*/
-	}
-	Return
+; This won't work - I need to actually trigger a ctrl+c, which this is TRIGGERED BY, but does not trigger. ;Gosub, LaunchClipMgr
+If clipboard = %A_MM%/%A_DD%/%A_YYYY% ; If they are the same...
+{
+	MsgBox, %clipboard% matches today's date of %A_MM%/%A_DD%/%A_YYYY%
+}
+Else If clipboard != %A_MM%/%A_DD%/%A_YYYY%] ; If they are different...
+{
+	MsgBox, %clipboard% FAILS to match today's date (%A_MM%/%A_DD%/%A_YYYY%)
+}
+Return
 }
 
 

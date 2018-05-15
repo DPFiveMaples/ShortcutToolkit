@@ -378,15 +378,13 @@ Return
 	Send, ^c
 	sleep,  50
 
-	If clipboard != %A_MM%/%A_DD%/%A_YYYY% ; If they are different...
+	If clipboard != %A_MM%/%A_DD%/%A_YYYY%] ; If they are different...
 	{
 		MsgBox, %clipboard% FAILS to match today's date (%A_MM%/%A_DD%/%A_YYYY%)
 	}
 	Else If clipboard = %A_MM%/%A_DD%/%A_YYYY% ; If they are the same...
 	{
-		;MsgBox, %clipboard% matches today's date of %A_MM%/%A_DD%/%A_YYYY%
-		;/*
-		sleep,  50
+		MsgBox, %clipboard% matches today's date of %A_MM%/%A_DD%/%A_YYYY%
 		EnterDate := clipboard
 		Send, {TAB}
 		sleep,  20
@@ -428,7 +426,6 @@ Return
 		Send, ^c
 		sleep,  50
 		MsgBox, %EnterDate%,  %ClientName% %Package% %FileName% %MailQty% %MailDate% %Salutation% %ClientEmail%
-		;*/
 	}
 	Return
 }
