@@ -377,7 +377,7 @@ Return
 {
 	Send, ^c
 	sleep,  50
-	
+
 	If clipboard != %A_MM%/%A_DD%/%A_YYYY% ; If they are different...
 	{
 		MsgBox, %clipboard% FAILS to match today's date (%A_MM%/%A_DD%/%A_YYYY%)
@@ -386,8 +386,6 @@ Return
 	{
 		;MsgBox, %clipboard% matches today's date of %A_MM%/%A_DD%/%A_YYYY%
 		;/*
-		
-		; This section should be refactored into an array-object loop].
 		sleep,  50
 		EnterDate := clipboard
 		Send, {TAB}
@@ -429,19 +427,8 @@ Return
 		sleep,  20
 		Send, ^c
 		sleep,  50
-		; End of the section that should be refactored into an array-object loop.
-		; MsgBox, %EnterDate%,  %ClientName% %Package% %FileName% %MailQty% %MailDate% %Salutation% %ClientEmail%
-		
+		MsgBox, %EnterDate%,  %ClientName% %Package% %FileName% %MailQty% %MailDate% %Salutation% %ClientEmail%
 		;*/
-		
-		; The following section is what actually SENDS the email
-		m := ComObjCreate("Outlook.Application").CreateItem(0)
-		m.Subject := "Hi There"
-		m.To := "marvinb@fivemaples.com" ; This should be changed in the future to be the variable "ClientEmail"
-		; Original - for reference: m.Body :="Here is the body... `n`n And the really cool thing about using this method, `n`n`n`n`n`n is, you can have what ever you want as the "body" and `n`n`n`n`n`n not worry about how long it is...or worry about the non-formatting issues that come from the mailto: command`n`n`n`n ...yes, that is a whole bunch of "new Lines" to show you how you can format this however you want...`n`n`n`n`n`n`n`n AND IT WORKS
-		m.Body := "Dear " Salutation " `n`n Good news: your thank you letter file has been mailed. `n`n File Name: " FileName " `n`n Number Mailed: " MailQty " `n`n Date Received: " EnterDate " `n`n Date Mailed: " MailDate " `n`n Package Number:  " Package " `n`n Sincerely, `n`n`n The Five Maples Team"
-		; m.Display ;to display the email message...and the really cool part, if you leave this line out, it will not show the window............... but the m.send below will still send the email!!!
-		m.Send ;to automatically send and CLOSE that new email window...  
 	}
 	Return
 }
