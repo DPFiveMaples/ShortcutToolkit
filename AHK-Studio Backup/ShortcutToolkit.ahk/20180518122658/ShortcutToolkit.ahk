@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=15
+version=14
 
 
 */
@@ -376,7 +376,7 @@ Return
 {
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=0
 	Sleep,  50
-	Progress, zh0 fs18, Please click the cell containing the Enter Date of the row `n that you wish to email about and then press 'Pause' to proceed. `n This notice will remain until you do. :D
+	Progress, zh0 fs18, "Please click the cell containing the Enter Date of the row `n that you wish to email about,  and then press 'Pause' to proceed. `n This notice will remain until you do. :D"
 	KeyWait, PAUSE, D
 	Progress, Off
 	settitlematchmode 2
