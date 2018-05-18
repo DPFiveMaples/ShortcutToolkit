@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=14
+version=13
 
 
 */
@@ -450,7 +450,7 @@ Return
 	m.Body := "Dear " Salutation " `n`n Good news: your thank you letter file has been mailed. `n`n File Name: " FileName " `n`n Number Mailed: " MailQty " `n`n Date Received: " EnterDate " `n`n Date Mailed: " MailDate " `n`n Package Number:  " Package " `n`n Sincerely, `n`n`n The Five Maples Team"
 	m.Display ;to display the email message...and the really cool part, if you leave this line out, it will not show the window............... but the m.send below will still send the email!!!
 	; m.Send ;to automatically send and CLOSE that new email window...  
-	MsgBox, In the future, the email will send automatically - this just gives you a chance to review the first few times. Please let marvin@fivemaples.com know when to 'pull the switch'.
+	MsgBox, In the future, the email will send automatically - this just gives you a chance to review the first few times.
 	Return
 }
 
