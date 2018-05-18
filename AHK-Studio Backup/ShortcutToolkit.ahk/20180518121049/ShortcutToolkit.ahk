@@ -147,7 +147,7 @@ Return
 
 
 :*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
-:*:shruggie`t::¯\_(ツ)_/¯
+:*:shruggie`t::¯\_(?)_/¯
 ^!'::’ ;c Ctrl+Alt+' (Apostrophe) - this will insert a Dartmouth apostrophe, instead of a regular one.
 
 ;===========================================================
@@ -240,7 +240,7 @@ clpb4len := StrLen(clpb4)
 StringTrimRight, clpbs4, clpb4, clpb4len - 50
 clpb5len := StrLen(clpb5)
 StringTrimRight, clpbs5, clpb5, clpb5len - 50
-; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied� every time someone copies.
+; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied? every time someone copies.
 sleep, 1000
 tooltip
 return
@@ -891,3 +891,5 @@ return
 	^ = Ctrl
 	# = Win key (I think?)
 	! = Alt Key (I think)
+	
+	

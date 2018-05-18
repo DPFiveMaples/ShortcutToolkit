@@ -432,7 +432,7 @@ Return
 	sleep,  20
 	;Send, ^c
 	;sleep,  50
-	; RM ClientEmail := clipboard
+	;ClientEmail := clipboard
 	;Send, {TAB}
 	;sleep,  20
 	;Send, ^c
@@ -891,3 +891,5 @@ return
 	^ = Ctrl
 	# = Win key (I think?)
 	! = Alt Key (I think)
+	
+	

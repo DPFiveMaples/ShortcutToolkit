@@ -432,7 +432,7 @@ Return
 	sleep,  20
 	;Send, ^c
 	;sleep,  50
-	; RM ClientEmail := clipboard
+	;ClientEmail := clipboard
 	;Send, {TAB}
 	;sleep,  20
 	;Send, ^c
@@ -886,8 +886,9 @@ return
 ;===========================================================
 ;==  NOTES
 ;===========================================================
-	
-	~ = Passthrough, at least when used as a prefix for a button combo, so ~^c would be Ctrl+c that also sends the same command to the native system
-	^ = Ctrl
-	# = Win key (I think?)
-	! = Alt Key (I think)
+
+~ = Passthrough, at least when used as a prefix for a button combo, so ~^c would be Ctrl+c that also sends the same command to the native system
+^ = Ctrl
+# = Win key (I think?)
+! = Alt Key (I think)
+

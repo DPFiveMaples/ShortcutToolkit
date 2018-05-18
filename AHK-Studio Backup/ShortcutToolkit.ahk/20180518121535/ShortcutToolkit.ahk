@@ -890,4 +890,4 @@ return
 	~ = Passthrough, at least when used as a prefix for a button combo, so ~^c would be Ctrl+c that also sends the same command to the native system
 	^ = Ctrl
 	# = Win key (I think?)
-	! = Alt Key (I think)
+	! = Alt Key (I think
