@@ -211,7 +211,6 @@ CloseAllWindows: ; Close all and reset the GUI number
 ~^c::
 {
 sleep, 100
-#ClipboardTimeout 3000
 if clipboard = ""
 {
 	; it's a picture, file etc.
@@ -242,9 +241,8 @@ StringTrimRight, clpbs4, clpb4, clpb4len - 50
 clpb5len := StrLen(clpb5)
 StringTrimRight, clpbs5, clpb5, clpb5len - 50
 ; tooltip, 1: %clpbs1%`n2: %clpbs2%`n3: %clpbs3%`n4: %clpbs4%`n5: %clpbs5% ; Uncomment this to get a "popup" of what was copied� every time someone copies.
-sleep, 300
-; tooltip Uncomment if the above tooltip is also uncommented
-#ClipboardTimeout 1000
+sleep, 1000
+tooltip
 return
 }
 
