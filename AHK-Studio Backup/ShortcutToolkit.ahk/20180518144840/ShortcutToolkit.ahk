@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=16
+version=15
 
 
 */
@@ -62,9 +62,8 @@ vFirstRun := 1
 	vRestart := 0
 	loop, 100
 	{
-		vRestart := vRestart + 2
-		Progress, %vRestart%
-		sleep, 10
+		vRestart := vRestart + 1
+		Progress,  vRestart
 	}
 	Progress,  Off
 	MsgBox Rebooted - please click 'OK' to proceed.

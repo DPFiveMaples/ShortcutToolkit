@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=16
+version=15
 
 
 */
@@ -56,26 +56,10 @@ vFirstRun := 1
 ;Return
 
 
-^+#r:: ;c Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
-{
-	Progress, w250,,, Hold yer ponies,  I'm restarting…
-	vRestart := 0
-	loop, 100
-	{
-		vRestart := vRestart + 2
-		Progress, %vRestart%
-		sleep, 10
-	}
-	Progress,  Off
-	MsgBox Rebooted - please click 'OK' to proceed.
-	Reload
-	ExitApp
-}
-
 
 UpdateCheck:
 If (A_Hour = 01 And A_Min = 15)
-{
+	{
 	Progress, w250,,, Hold yer ponies,  I'm updating…
 	Sleep, 2000
 	Progress, off
