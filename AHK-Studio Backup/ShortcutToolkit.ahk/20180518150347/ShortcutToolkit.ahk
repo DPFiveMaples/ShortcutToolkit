@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=20
+version=16
 
 
 */
@@ -56,7 +56,7 @@ vFirstRun := 1
 ;Return
 
 
-^+#r:: ;c 🌟 Restart Marvin's ShortCutToolkit ⌨️ Ctrl+Shift+Win+r | Pressing Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
+^+#r:: ;c Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
 	vRestart := 0
@@ -74,7 +74,7 @@ vFirstRun := 1
 
 
 UpdateCheck:
-If (A_Hour = 01 And A_Min = 12)
+If (A_Hour = 01 And A_Min = 15)
 {
 	Progress, w250,,, Hold yer ponies,  I'm updating…
 	Sleep, 2000
@@ -103,7 +103,7 @@ Return
 
 
 VersionCheck:
-^+#t:: ; c If you didn't trigger this window by pressing 'Win+F2', then it must mean that you had an update last night! Yay! (you can click OK)
+^+#t:: ;c If you didn't trigger this window by pressing 'Win+F2', then it must mean that you had an update last night! Yay! (you can click OK)
 {
 ; IniRead, OutputVar, C:\Temp\myfile.ini, section2, key
 ; MsgBox, The value is %OutputVar%.
@@ -123,7 +123,7 @@ Return
 
 
 UpdateScript:
-^+#u:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+u | Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
+^+#u:: ;c Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
 {
 	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
 	;Progress, w250,,, Hold yer ponies,  I'm updating…
@@ -138,7 +138,7 @@ UpdateScript:
 ;==  Help File Section
 ;==========================================================
 
-#F2:: ;c 🌟 Activate "Help" Menu ⌨️ WinKey+F2 | will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
+#F2:: ;c WinKey+F2 will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
 {
 fileread content, %a_scriptfullpath%
 comment=
@@ -162,9 +162,9 @@ Return
 ;==========================================================
 
 
-:*:Jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "Jam", Hit Tab | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
+:*:Jam`t::James Chase`t8023875157`t110 ;c Typing Jam and then hitting tab or space will auto-populate the warehouse info on the NDC/SCF 8125 screen
 :*:shruggie`t::¯\_(ツ)_/¯
-^!'::’ ;c 🌟 Dartmouth Apostrophe ⌨️ Ctrl+Alt+' | Ctrl+Alt+' will insert a Dartmouth apostrophe, instead of a regular one.
+^!'::’ ;c Ctrl+Alt+' (Apostrophe) - this will insert a Dartmouth apostrophe, instead of a regular one.
 
 ;===========================================================
 ;==  Exit/Escape Section
@@ -198,7 +198,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 ;===========================================================
 
 #IfWinNotExist DP Dashboard 
-^space:: ; !#d:: ;Used to be Win+Alt+D ;c 🌟 DP Dashboard ⌨️ Ctrl+Space | Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
+^space:: ; !#d:: ;Used to be Win+Alt+D ;c Hitting Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
 {
 	
 	Gui, New,,DP Dashboard
@@ -265,7 +265,7 @@ return
 }
 
 ButtonClipboardMgr:
-^+v:: ;c 🌟 Launch Clipboard Manager ⌨️ Ctrl+Shift+V  | Pressing Ctrl+Shift+V will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default to your current clipboard after 3 seconds.
+^+v:: ;c Ctrl+Shift+V will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default to your current clipboard after 3 seconds.
 {
 	;varProgressMeter := 0
 	clpb1len := StrLen(clpb1)
@@ -390,7 +390,7 @@ Return
 ;==  Warehouse Department - Auto "Thank you" Emailer
 ;===========================================================
 
-#+^m:: ;c 🌟 Warehouse Macro ⌨️ Ctrl+Shift+Win+m | Ctrl+Shift+Win+m will trigger the Warehouse Macro - this will launch the Google Sheet and (after a couple of clicks) send an email to Heather.
+#+^m:: ;c Ctrl+Shift+Win+m will trigger the Warehouse Macro - this will launch the Google Sheet and (after a couple of clicks) send an email to Heather.
 {
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=0
 	Sleep,  50
@@ -832,7 +832,7 @@ Return
 
 
 
-XButton1:: ;c 🌟 Move Up & Down Using Mouse Buttons While Deduping ⌨️ The Foward & Backward Mouse buttons (if available), or roll the Mouse Wheel | This will navagate up and down your dedupe screen, and the middle mouse button will UNHIDE all dupes in the selected group. The Mouse Wheel should work too.
+XButton1:: ;c The Foward & Backward Mouse buttons (if available) will navagate up and down your dedupe screen, and the middle mouse button will UNHIDE all dupes in the selected group.
 while GetKeyState("XButton1", "P") ; this loop only executes when the XButton is pressed down
 {
 	 MouseSpeed = %MouseSpeed%
