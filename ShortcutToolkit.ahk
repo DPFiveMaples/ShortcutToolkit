@@ -55,7 +55,7 @@ vFirstRun := 1
 SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
 
-ButtonRestartToolkit
+;ButtonRestartToolkit
 ^+#r:: ;c 🌟 Restart Marvin's ShortCutToolkit ⌨️ Ctrl+Shift+Win+r | Pressing Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
