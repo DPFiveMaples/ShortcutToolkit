@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=21
+version=22
 
 
 */
@@ -55,7 +55,7 @@ vFirstRun := 1
 SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
 
-;ButtonRestartToolkit
+;|||ButtonRestartToolkit
 ^+#r:: ;c 🌟 Restart Marvin's ShortCutToolkit ⌨️ Ctrl+Shift+Win+r | Pressing Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
@@ -138,6 +138,7 @@ UpdateScript:
 ;==  Help File Section
 ;==========================================================
 
+;|||ButtonHelp
 #F2:: ;c 🌟 Activate "Help" Menu ⌨️ WinKey+F2 | will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
 {
 fileread content, %a_scriptfullpath%
@@ -161,9 +162,12 @@ Return
 ;==  Useful Hotkeys Section
 ;==========================================================
 
-
 :*:Jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "Jam", Hit Tab | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
+
+;|||ButtonShruggie
 :*:shruggie`t::¯\_(ツ)_/¯
+
+;|||ButtonDartmouthApostrophe
 ^!'::’ ;c 🌟 Dartmouth Apostrophe ⌨️ Ctrl+Alt+' | Ctrl+Alt+' will insert a Dartmouth apostrophe, instead of a regular one.
 
 ;===========================================================
@@ -400,6 +404,7 @@ Return
 ;==  Warehouse Department - Auto "Thank you" Emailer
 ;===========================================================
 
+;|||ButtonThankYouEmailer
 #+^m:: ;c 🌟 Warehouse Macro ⌨️ Ctrl+Shift+Win+m | Ctrl+Shift+Win+m will trigger the Warehouse Macro - this will launch the Google Sheet and (after a couple of clicks) send an email to Heather.
 {
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=0
