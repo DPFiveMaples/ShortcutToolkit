@@ -52,10 +52,10 @@ vFirstRun := 1
 ; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
 ; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
-;SetTimer UpdateCheck, 60000 ; Check each minute
+SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
 
-
+ButtonRestartToolkit
 ^+#r:: ;c 🌟 Restart Marvin's ShortCutToolkit ⌨️ Ctrl+Shift+Win+r | Pressing Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
@@ -200,7 +200,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 #IfWinNotExist DP Dashboard 
 ^space:: ; !#d:: ;Used to be Win+Alt+D ;c 🌟 DP Dashboard ⌨️ Ctrl+Space | Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
 {
-	
+	;/*
 	Gui, New,,DP Dashboard
 	Gui, Add, Text,, JUST Dedupe Indexes:
 	Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:   ; Will come back for this once I've excised the PDF part.
@@ -214,7 +214,17 @@ CloseAllWindows: ; Close all and reset the GUI number
 	Gui, Add, Button,, &WHIMB
 	Gui, Show,,DP Dashboard
 	return  ; End of auto-execute section. The script is idle until the user does something.
-	
+	;*/
+    /*
+    Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
+    Gui Add, Button, x13 y71 w80 h23, &ClipboardMgr
+    Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
+    Gui Add, Button, x13 y96 w80 h23, &Login
+    Gui Add, Button, x14 y122 w80 h23, &WHIMB
+
+    Gui Show, w397 h381, DP Dashboard
+    Return
+    */
 }
 
 
