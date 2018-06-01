@@ -74,7 +74,7 @@ SetTimer UpdateCheck, 60000 ; Check each minute
 
 
 UpdateCheck:
-If (A_Hour = 14) ; And A_Min = 12)
+If (A_Hour = 01 And A_Min = 12)
 {
 	Progress, w250,,, Hold yer ponies,  I'm updating…
 	Sleep, 2000
