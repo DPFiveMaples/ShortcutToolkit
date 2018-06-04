@@ -121,7 +121,7 @@ if (CurrentVer < NewVer)
 Return
 }
 
-
+ButtonForceUpdateToolkit:
 UpdateScript:
 ^+#u:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+u | Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
 {
@@ -138,7 +138,7 @@ UpdateScript:
 ;==  Help File Section
 ;==========================================================
 
-;|||ButtonHelp
+ButtonHelp:
 #F2:: ;c 🌟 Activate "Help" Menu ⌨️ WinKey+F2 | will bring up this help file, which attempts to automatically document these functions. It may go without saying, but I'm still working on it. :D
 {
 fileread content, %a_scriptfullpath%
@@ -154,6 +154,7 @@ loop parse, content,`n
   comment =%comment%%com%`n`n
  } 
 }
+  gui, submit
   msgbox %comment%
 Return
 }
@@ -219,10 +220,11 @@ CloseAllWindows: ; Close all and reset the GUI number
     Gui Add, Button, x13 y96 w80 h23, &Login
     Gui Add, Button, x14 y122 w80 h23, &WarehouseNDCSCFInfo
     Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
-    Gui Add, Button, x109 y123 w80 h23, &Help
-    Gui Add, Button, x108 y45 w80 h23, ¯\&_(ツ)_/¯
-    Gui Add, Button, x108 y71 w80 h23, &Dartmouth Apostrophe
-    Gui Add, Button, x108 y97 w80 h23, &Thank You Emailer
+    Gui Add, Button, x108 y149 w80 h23, &Help
+    Gui Add, Button, x107 y71 w80 h23, ¯\&_(ツ)_/¯
+    Gui Add, Button, x107 y97 w80 h23, &Dartmouth Apostrophe
+    Gui Add, Button, x107 y123 w80 h23, &Thank You Emailer
+    Gui Add, Button, x107 y43 w80 h23, &Force Update Toolkit
 	Gui, Show,,DP Dashboard
 	return  ; End of auto-execute section. The script is idle until the user does something.
 	;*/
