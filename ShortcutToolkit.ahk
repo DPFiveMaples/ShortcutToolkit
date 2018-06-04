@@ -55,7 +55,7 @@ vFirstRun := 1
 SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
 
-;|||ButtonRestartToolkit
+ButtonRestartToolkit:
 ^+#r:: ;c 🌟 Restart Marvin's ShortCutToolkit ⌨️ Ctrl+Shift+Win+r | Pressing Ctrl+Shift+Win+r will restart the ShortCutToolkit - use this if it freezes up on you.
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
@@ -164,8 +164,15 @@ Return
 
 :*:Jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "Jam", Hit Tab | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
 
-;|||Button¯\_(ツ)_/¯
 :*:shruggie`t::¯\_(ツ)_/¯
+
+Button¯\_(ツ)_/¯:
+{
+gui, submit
+sleep, 69
+Send, ¯\_(ツ)_/¯
+}
+
 
 ;|||ButtonDartmouthApostrophe
 ^!'::’ ;c 🌟 Dartmouth Apostrophe ⌨️ Ctrl+Alt+' | Ctrl+Alt+' will insert a Dartmouth apostrophe, instead of a regular one.
@@ -210,10 +217,10 @@ CloseAllWindows: ; Close all and reset the GUI number
     Gui Add, Button, x13 y71 w80 h23, &ClipboardMgr
     Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
     Gui Add, Button, x13 y96 w80 h23, &Login
-    Gui Add, Button, x14 y122 w80 h23, &WHIMB
+    Gui Add, Button, x14 y122 w80 h23, &WarehouseNDCSCFInfo
     Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
     Gui Add, Button, x109 y123 w80 h23, &Help
-    Gui Add, Button, x108 y45 w80 h23, &¯\_(ツ)_/¯
+    Gui Add, Button, x108 y45 w80 h23, ¯\&_(ツ)_/¯
     Gui Add, Button, x108 y71 w80 h23, &Dartmouth Apostrophe
     Gui Add, Button, x108 y97 w80 h23, &Thank You Emailer
 	Gui, Show,,DP Dashboard
@@ -392,7 +399,7 @@ GetUnP(vPurposeKey) ; vPurposeKey will be used to differentiate between the diff
 
 
 
-ButtonWHIMB:
+ButtonWarehouseNDCSCFInfo:
 {
 Gui, Submit 
 SendInput James Chase`t8023875157`t110
