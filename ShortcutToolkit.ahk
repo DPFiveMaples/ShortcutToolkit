@@ -350,19 +350,61 @@ Return
 
 ButtonLogin:
 {
-    MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
-	Gui, Submit 
-	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
-    Loop 10
+    Gui, Submit 
+    User := ""
+    IniRead,UnparsedCreds,\\Watson\Production\X\DP Use\Shared AHKs\Toolkit.ini, PostalOneLogins, %A_Username%, "ERROR|ERROR"  ; Consider making the \\Watson\Prod... path a path to X:\DP Use\etc
+    UserCreds := Object("User")
+    Loop, Parse, UnparsedCreds,|
     {
-        while (A_Cursor = "AppStarting")
-            continue
-        Sleep, 100
+        If A_Index = 1
+        {
+        User := A_LoopField
+        }
+        Else If A_Index = 2
+        {
+        Pass := A_LoopField
+        }
+        Else
+        {
+        MsgBox, Error! Danger Will Robinson! See Marvin, and Mention ButtonLogin Loop
+        }
+    }  
+    ;MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
+	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
+    IEPointer := IEGet("usps")
+    PixelGetColor, PageLoadCheck, 1762,54
+    Sleep, 100
+    While InStr(PageLoadCheck,"4C4C4C") < 1
+    {
+    PixelGetColor, PageLoadCheck, 1762,54
+    Sleep, 100
     }
-    MsgBox, It's loaded!
+    Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
+    Sleep, 100
+    Send, {Tab}%Pass%
+    Sleep, 100
+    Send, {Tab}{Enter}
+    MsgBox, %User% | %Pass%
 	Return
 }
 
+
+
+;used to be WBGet renamed though
+IEGet(WinTitle="ahk_class IEFrame", Svr#=1) 
+{ ; based on ComObjQuery docs
+   static   msg := DllCall("RegisterWindowMessage", "str", "WM_HTML_GETOBJECT")
+   ,   IID := "{0002DF05-0000-0000-C000-000000000046}" ; IID_IWebBrowserApp
+;   ,   IID := "{332C4427-26CB-11D0-B483-00C04FD90119}" ; IID_IHTMLWindow2
+   SendMessage msg, 0, 0, Internet Explorer_Server%Svr#%, %WinTitle%
+   if (ErrorLevel != "FAIL") {
+      lResult:=ErrorLevel, VarSetCapacity(GUID,16,0)
+      if DllCall("ole32\CLSIDFromString", "wstr","{332C4425-26CB-11D0-B483-00C04FD90119}", "ptr",&GUID) >= 0 {
+         DllCall("oleacc\ObjectFromLresult", "ptr",lResult, "ptr",&GUID, "ptr",0, "ptr*",pdoc)
+         return ComObj(9,ComObjQuery(pdoc,IID,IID),1), ObjRelease(pdoc)
+      }
+   }
+}
 
 /*
 ButtonLogin:
@@ -421,9 +463,10 @@ GetUnP(vPurposeKey) ; vPurposeKey will be used to differentiate between the diff
 ;==  Warehouse Department - Auto "Thank you" Emailer
 ;===========================================================
 
-;|||ButtonThankYouEmailer
+ButtonThankYouEmailer:
 #+^m:: ;c 🌟 Warehouse Macro ⌨️ Ctrl+Shift+Win+m | Ctrl+Shift+Win+m will trigger the Warehouse Macro - this will launch the Google Sheet and (after a couple of clicks) send an email to Heather.
 {
+    Gui, Submit
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=0
 	Sleep,  50
 	Progress, zh0 fs18, Please click the cell containing the Enter Date of the row `n that you wish to email about and then press 'Pause' to proceed. `n This notice will remain until you do. :D
