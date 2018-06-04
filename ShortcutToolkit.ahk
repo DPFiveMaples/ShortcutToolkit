@@ -374,21 +374,10 @@ ButtonLogin:
     IEPointer := IEGet("usps")
     PixelGetColor, PageLoadCheck, 1762,54
     Sleep, 100
-    If A_Username <> "marvinb"
+    While InStr(PageLoadCheck,"DFDFDF") < 1   ;DFDFDF
     {
-        While InStr(PageLoadCheck,"DFDFDF") < 1   ;DFDFDF
-        {
-        PixelGetColor, PageLoadCheck, 1762,54
-        Sleep, 100
-        }
-    }
-    Else
-    {
-        While InStr(PageLoadCheck,"4C4C4C") < 1   ;DFDFDF
-        {
-        PixelGetColor, PageLoadCheck, 1762,54
-        Sleep, 100
-        }
+    PixelGetColor, PageLoadCheck, 1762,54
+    Sleep, 100
     }
     Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
     Sleep, 100
