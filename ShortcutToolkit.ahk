@@ -164,7 +164,7 @@ Return
 
 :*:Jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "Jam", Hit Tab | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
 
-;|||ButtonShruggie
+;|||Button¯\_(ツ)_/¯
 :*:shruggie`t::¯\_(ツ)_/¯
 
 ;|||ButtonDartmouthApostrophe
@@ -206,16 +206,16 @@ CloseAllWindows: ; Close all and reset the GUI number
 {
 	;/*
 	Gui, New,,DP Dashboard
-	Gui, Add, Text,, JUST Dedupe Indexes:
-	Gui, Add, Text,, Standard Dedupe Indexes && Dist Report:   ; Will come back for this once I've excised the PDF part.
-	Gui, Add, Text,, Clipboard Manager:
-	Gui, Add, Text,, TESTING: Postal One! Login:	 ; Come back for this one after release
-	Gui, Add, Text,, WH NDC/SCF Info:
-	Gui, Add, Button, ym, &Just Dupe Indexes  ; The ym option starts a new column of controls, and the label ButtonJustDupeIndexes (if it exists) will be run when the button is pressed.
-	Gui, Add, Button,, &Std Dedupe
-	Gui, Add, Button, default, &ClipboardMgr
-	Gui, Add, Button,, &Login ; Come back for this one after release
-	Gui, Add, Button,, &WHIMB
+    Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
+    Gui Add, Button, x13 y71 w80 h23, &ClipboardMgr
+    Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
+    Gui Add, Button, x13 y96 w80 h23, &Login
+    Gui Add, Button, x14 y122 w80 h23, &WHIMB
+    Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
+    Gui Add, Button, x109 y123 w80 h23, &Help
+    Gui Add, Button, x108 y45 w80 h23, &¯\_(ツ)_/¯
+    Gui Add, Button, x108 y71 w80 h23, &Dartmouth Apostrophe
+    Gui Add, Button, x108 y97 w80 h23, &Thank You Emailer
 	Gui, Show,,DP Dashboard
 	return  ; End of auto-execute section. The script is idle until the user does something.
 	;*/
