@@ -215,10 +215,10 @@ CloseAllWindows: ; Close all and reset the GUI number
 	;/*
 	Gui, New,,DP Dashboard
     Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
-    Gui Add, Button, x13 y71 w80 h23, &ClipboardMgr
+    Gui Add, Button, x13 y71 w80 h23, &Clipboard Manager
     Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
     Gui Add, Button, x13 y96 w80 h23, &Login
-    Gui Add, Button, x14 y122 w80 h23, &WarehouseNDCSCFInfo
+    Gui Add, Button, x14 y122 w80 h23, &Warehouse NDC SCF Info
     Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
     Gui Add, Button, x108 y149 w80 h23, &Help
     Gui Add, Button, x107 y71 w80 h23, ¯\&_(ツ)_/¯
@@ -287,7 +287,7 @@ sleep, 300
 return
 }
 
-ButtonClipboardMgr:
+ButtonClipboardManager:
 ^+v:: ;c 🌟 Launch Clipboard Manager ⌨️ Ctrl+Shift+V  | Pressing Ctrl+Shift+V will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default to your current clipboard after 3 seconds.
 {
 	;varProgressMeter := 0
