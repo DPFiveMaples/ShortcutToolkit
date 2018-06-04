@@ -163,20 +163,34 @@ Return
 ;==  Useful Hotkeys Section
 ;==========================================================
 
-:*:Jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "Jam", Hit Tab | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
+:*:jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "jam" & Hit Tab OR just press the Warehouse NDC SCF Info button | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
 
-:*:shruggie`t::¯\_(ツ)_/¯
-
-Button¯\_(ツ)_/¯:
+ButtonWarehouseNDCSCFInfo:
 {
-gui, submit
-sleep, 69
-Send, ¯\_(ツ)_/¯
+Gui, Submit 
+SendInput James Chase`t8023875157`t110
+Return
+}
+
+:*:shruggie`t::¯\_(ツ)_/¯ ;c 🌟 Insert ¯\_(ツ)_/¯ into your text ⌨️ Type "shruggie" & Hit Tab OR just press the button
+
+Button¯\_(ツ)_/¯: ; This does the same thing as the above command, but FROM A BUTTON!!!
+{
+    gui, submit
+    sleep, 69
+    Send, ¯\_(ツ)_/¯
 }
 
 
-;|||ButtonDartmouthApostrophe
-^!'::’ ;c 🌟 Dartmouth Apostrophe ⌨️ Ctrl+Alt+' | Ctrl+Alt+' will insert a Dartmouth apostrophe, instead of a regular one.
+^!'::’ ; Left in for compatibility with earlier versions of the program.
+^+'::’ ;c 🌟 Dartmouth Apostrophe ⌨️ Ctrl+Shift+' | Ctrl+Shift+' (or just pressing the "Dartmouth Apostrophe" button) will insert a Dartmouth apostrophe, instead of a regular one.
+
+ButtonDartmouthApostrophe:
+{
+    gui, submit
+    sleep, 69
+    Send, ’
+}
 
 ;===========================================================
 ;==  Exit/Escape Section
@@ -184,22 +198,20 @@ Send, ¯\_(ツ)_/¯
 
 
 #IfWinActive ahk_class AutoHotkeyGUI
-^space::
-{
-	Gui DPDashboard:Cancel
-	Gui, submit
-	Return	
-}
-
 
 ;/* ; Fix below with context sensitive : IfWinActive ahk_class AutoHotkeyGUI ; or something of the like
 GuiEscape:
 GuiClose:
 CloseAllWindows: ; Close all and reset the GUI number
+;^space::
 {
 	;Reload
 	;ExitApp
-	Gui, submit
+    IfWinExist DP Dashboard 
+    {
+        Gui DPDashboard:Cancel
+        Gui, submit
+    }
 	Return	
 }
 
@@ -209,35 +221,33 @@ CloseAllWindows: ; Close all and reset the GUI number
 ;==  DP Dashboard
 ;===========================================================
 
-#IfWinNotExist DP Dashboard 
-^space:: ; !#d:: ;Used to be Win+Alt+D ;c 🌟 DP Dashboard ⌨️ Ctrl+Space | Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
-{
-	;/*
-	Gui, New,,DP Dashboard
-    Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
-    Gui Add, Button, x13 y71 w80 h23, &Clipboard Manager
-    Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
-    Gui Add, Button, x13 y96 w80 h23, &Login
-    Gui Add, Button, x14 y122 w80 h23, &Warehouse NDC SCF Info
-    Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
-    Gui Add, Button, x108 y149 w80 h23, &Help
-    Gui Add, Button, x107 y71 w80 h23, ¯\&_(ツ)_/¯
-    Gui Add, Button, x107 y97 w80 h23, &Dartmouth Apostrophe
-    Gui Add, Button, x107 y123 w80 h23, &Thank You Emailer
-    Gui Add, Button, x107 y43 w80 h23, &Force Update Toolkit
-	Gui, Show,,DP Dashboard
-	return  ; End of auto-execute section. The script is idle until the user does something.
-	;*/
-    /*
-    Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
-    Gui Add, Button, x13 y71 w80 h23, &ClipboardMgr
-    Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
-    Gui Add, Button, x13 y96 w80 h23, &Login
-    Gui Add, Button, x14 y122 w80 h23, &WHIMB
 
-    Gui Show, w397 h381, DP Dashboard
-    Return
-    */
+^space:: ;c 🌟 DP Dashboard ⌨️ Ctrl+Space | Ctrl+Space will launch what I like to call the "DP Dashboard", which contains most of the clickable commands
+{
+    IfWinNotExist DP Dashboard
+	{
+        Gui, New,,DP Dashboard
+        Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
+        Gui Add, Button, x13 y71 w80 h23, &Clipboard Manager
+        Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
+        Gui Add, Button, x13 y96 w80 h23, &Login
+        Gui Add, Button, x14 y122 w80 h23, &Warehouse NDC SCF Info
+        Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
+        Gui Add, Button, x108 y149 w80 h23, &Help
+        Gui Add, Button, x107 y71 w80 h23, ¯\&_(ツ)_/¯
+        Gui Add, Button, x107 y97 w80 h23, &Dartmouth Apostrophe
+        Gui Add, Button, x107 y123 w80 h23, &Thank You Emailer
+        Gui Add, Button, x107 y43 w80 h23, &Force Update Toolkit
+        Gui, Show,,DP Dashboard
+        Return
+    }
+    Else
+    {
+        Gui DPDashboard:Cancel
+        Gui, submit
+        Return
+    }
+    return
 }
 
 
@@ -288,7 +298,7 @@ return
 }
 
 ButtonClipboardManager:
-^+v:: ;c 🌟 Launch Clipboard Manager ⌨️ Ctrl+Shift+V  | Pressing Ctrl+Shift+V will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default to your current clipboard after 3 seconds.
+^+v:: ;c 🌟 Launch Clipboard Manager ⌨️ Ctrl+Shift+V OR just press the Clipboard Manager button | This will let you select one of the last 5 things you've copied, assuming they were text.`nIt will time out and default back to your current clipboard after 3 seconds.
 {
 	;varProgressMeter := 0
 	clpb1len := StrLen(clpb1)
@@ -340,8 +350,16 @@ Return
 
 ButtonLogin:
 {
+    MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
 	Gui, Submit 
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
+    Loop 10
+    {
+        while (A_Cursor = "AppStarting")
+            continue
+        Sleep, 100
+    }
+    MsgBox, It's loaded!
 	Return
 }
 
@@ -397,16 +415,6 @@ GetUnP(vPurposeKey) ; vPurposeKey will be used to differentiate between the diff
 }
 
 
-
-
-
-
-ButtonWarehouseNDCSCFInfo:
-{
-Gui, Submit 
-SendInput James Chase`t8023875157`t110
-Return
-}
 
 
 ;===========================================================
