@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=22
+version=23
 
 
 */
@@ -33,16 +33,6 @@ NewVer = 0
 ; Shift	    +
 ; Win Logo	#
 
-; Consider putting a "First Run" quick tip upon first running the file - a quick 3 second splash screen that indicates to hit the "help" key to find out more.
-
-/*
-vFirstRun := 0
-If (vFirstRun <> 0)
-{
-MsgBox, Hit Win+F2 to learn moar!
-}
-vFirstRun := 1
-*/
 
 
 
@@ -50,7 +40,6 @@ vFirstRun := 1
 ;==  Update Module
 ;===========================================================
 ; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
-; Files if hosted on Dropbox   : https://www.dropbox.com/s/u1yfby4yjz8xqon/ShortcutToolkit.ahk?dl=1
 
 SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
@@ -179,6 +168,7 @@ Button¯\_(ツ)_/¯: ; This does the same thing as the above command, but FROM A
     gui, submit
     sleep, 69
     Send, ¯\_(ツ)_/¯
+    Return
 }
 
 
@@ -190,7 +180,18 @@ ButtonDartmouthApostrophe:
     gui, submit
     sleep, 69
     Send, ’
+    Return
 }
+
+
+ButtonLaunchWiki:
+^!w:: ;c 🌟 Open Wiki to Index ⌨️ Ctrl+Alt+W | Ctrl+Alt+W will open the Five Maples Wiki in a new tab to the Index of All Pages
+{
+    gui, submit
+    Run, http://watson/mediawiki/index.php/Special:AllPages
+    Return
+}
+
 
 ;===========================================================
 ;==  Exit/Escape Section
@@ -227,17 +228,18 @@ CloseAllWindows: ; Close all and reset the GUI number
     IfWinNotExist DP Dashboard
 	{
         Gui, New,,DP Dashboard
-        Gui Add, Button, x12 y19 w80 h23, &Std Dedupe
+        Gui Add, Button, x13 y19 w80 h23, &Std Dedupe
         Gui Add, Button, x13 y71 w80 h23, &Clipboard Manager
-        Gui Add, Button, x12 y46 w80 h23, &Just Dupe Indexes
+        Gui Add, Button, x13 y45 w80 h23, &Just Dupe Indexes
         Gui Add, Button, x13 y96 w80 h23, &Login
-        Gui Add, Button, x14 y122 w80 h23, &Warehouse NDC SCF Info
+        Gui Add, Button, x13 y122 w80 h23, &Warehouse NDC SCF Info
+        Gui Add, Button, x13 y150 w80 h23, &Launch Wiki
         Gui Add, Button, x107 y19 w80 h23, &Restart Toolkit
-        Gui Add, Button, x108 y149 w80 h23, &Help
+        Gui Add, Button, x107 y150 w80 h23, &Help
         Gui Add, Button, x107 y71 w80 h23, ¯\&_(ツ)_/¯
-        Gui Add, Button, x107 y97 w80 h23, &Dartmouth Apostrophe
-        Gui Add, Button, x107 y123 w80 h23, &Thank You Emailer
-        Gui Add, Button, x107 y43 w80 h23, &Force Update Toolkit
+        Gui Add, Button, x107 y96 w80 h23, &Dartmouth Apostrophe
+        Gui Add, Button, x107 y122 w80 h23, &Thank You Emailer
+        Gui Add, Button, x107 y45 w80 h23, &Force Update Toolkit
         Gui, Show,,DP Dashboard
         Return
     }
@@ -368,16 +370,46 @@ ButtonLogin:
         {
         MsgBox, Error! Danger Will Robinson! See Marvin, and Mention ButtonLogin Loop
         }
-    }  
-    Run, C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat, C:\Program Files (x86)\MDRClient-win64-PROD\, Max
-    WinWait, PostalOne! Mail.dat Client Application
-    WinWaitClose
+    }
+    MDRVar := ""
+    If FileExist("C:\Postal1\run-mdclient.bat")
+    {
+        MDClientVar := "C:\Postal1\run-mdclient.bat"
+    }
+    Else If FileExist("C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat")
+    {
+        MDClientVar := "C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat"
+    }
+    If MDClientVar <> ""
+    {
+        Run, C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat, C:\Program Files (x86)\MDRClient-win64-PROD\, Max
+        SplashTextOn, 400, 100, Wait for it…, Please Left Click the "Username" field once the Uploader is open and ready for input then hit "Scroll Lock" to have your credentials entered and login.
+        KeyWait, ScrollLock, D
+        Sleep, 100
+        SplashTextOff
+        Sleep, 100
+        SendInput, {BackSpace 3}%User%
+        Sleep, 50
+        Send, {Tab}
+        Sleep, 50
+        SendInput, %Pass%
+        Sleep, 50
+        Send, {Tab 2}
+        Sleep, 50
+        Send, {Enter}
+        WinWait, PostalOne! Mail.dat Client Application
+        WinWaitClose
+    }
+    Else
+    {
+        MsgBox, Please tell Marvin - something MAY not be quite right with your Mail.Dat Client Install.
+    }
     Sleep, 200
     ;MsgBox, Hopefull this doesn't popup until I'm ready for it...
     ;MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
 	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
     IEPointer := IEGet("usps")
-    SplashTextOn, 400, 300, Wait for it…, Please press "Space" once the page is done loading.
+    SplashTextOn, 400, 100, Wait for it…, Please press "Space" once the page is done loading.
     KeyWait, Space, D
     SplashTextOff
     Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
