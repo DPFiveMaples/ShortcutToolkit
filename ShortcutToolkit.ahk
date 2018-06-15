@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=23
+version=24
 
 
 */
@@ -185,12 +185,14 @@ ButtonDartmouthApostrophe:
 
 
 ButtonLaunchWiki:
-^!w:: ;c 🌟 Open Wiki to Index ⌨️ Ctrl+Alt+W | Ctrl+Alt+W will open the Five Maples Wiki in a new tab to the Index of All Pages
+^!w:: ;c 🌟 Open Wiki to Index ⌨️ Ctrl+Alt+W | Ctrl+Alt+W (or just pressing the "Launch Wiki" button) will open the Five Maples Wiki in a new tab to the Index of All Pages
 {
     gui, submit
     Run, http://watson/mediawiki/index.php/Special:AllPages
     Return
 }
+
+^F1::GoSub, ButtonLogin
 
 
 ;===========================================================
@@ -371,6 +373,17 @@ ButtonLogin:
         MsgBox, Error! Danger Will Robinson! See Marvin, and Mention ButtonLogin Loop
         }
     }
+    
+    
+    Run, chrome.exe --incognito https://gateway.usps.com/eAdmin/view/signin
+    Sleep 5000
+    Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%{TAB}%Pass%{ENTER}
+    Return
+}    ; <---Comment out the bracket once I'm working on this again
+    /* ; <---Comment out the slashasterisk once I'm working on this again
+    
+    
+    
     MDRVar := ""
     If FileExist("C:\Postal1\run-mdclient.bat")
     {
@@ -414,9 +427,7 @@ ButtonLogin:
     SplashTextOff
     Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
     Sleep, 100
-    Send, {Tab}%Pass%
-    Sleep, 100
-    Send, {Tab}{Enter}
+    Send, {Tab}%Pass%{Enter}
     ;MsgBox, %User% | %Pass%
 	Return
 }
