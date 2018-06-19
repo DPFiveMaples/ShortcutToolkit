@@ -192,10 +192,8 @@ ButtonLaunchWiki:
     Return
 }
 
-^F1::GoSub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
+^F1::GoSub, ButtonLogin
 
-
-^!k::MsgBox, Kendra is Kewl!
 
 ;===========================================================
 ;==  Exit/Escape Section
