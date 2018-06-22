@@ -1,0 +1,49 @@
+body {
+	font-family: Calibri, sans-serif;
+	font-size: 11pt;
+	width: 95%;
+	max-width: 800px;
+	margin: auto;
+	padding-bottom: 50px;
+}
+
+h1{
+	text-align: center;
+	font-size: 22pt;
+	
+}
+
+li {
+	list-style-type: none;
+
+}
+
+fieldset {
+	margin-bottom: 30px;
+}
+
+#jobfeatures {	
+    -webkit-column-count:3;
+    -moz-column-count: 3;
+    column-count: 3;
+	height: 90px;
+	float: center;
+}
+
+#checklist {	
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+}
+
+ul {
+	-webkit-margin-before: 0px;
+	margin-top: 0px;
+	padding-left: 30px;
+
+}
+
+.jobinfo {
+	text-align: center;
+}
+
