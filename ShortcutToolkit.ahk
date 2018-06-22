@@ -192,8 +192,23 @@ ButtonLaunchWiki:
     Return
 }
 
-^F1::GoSub, ButtonLogin
+^F1::GoSub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
 
+
+^!k::
+{
+test := A_UserName
+If test = "kendrak"
+	{
+		Msgbox, %test%
+		return
+	}
+Else
+	{
+	MsgBox, Kendra is Kewl!
+	return
+	}
+}
 
 ;===========================================================
 ;==  Exit/Escape Section
