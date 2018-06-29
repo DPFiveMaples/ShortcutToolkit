@@ -405,6 +405,10 @@ ButtonLogin:
     {
         MDClientVar := "C:\Program Files (x86)\Postal1\MDRClient-win64-PROD\run-mdclient.bat"
     }
+    Else If FileExist("C:\Program Files\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
+    {
+        MDClientVar := "C:\Program Files\Postal1\MDRClient-win64-PROD\run-mdclient.bat"
+    }
     Else If FileExist("C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat")
     {
         MDClientVar := "C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat"
