@@ -397,7 +397,7 @@ ButtonLogin:
 }    ; <---Comment out the bracket once I'm working on this again
     /* ; <---Comment out the slashasterisk once I'm working on this again
     
-    
+    ; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
     
     MDRVar := ""
     If FileExist("C:\Postal1\run-mdclient.bat")
