@@ -390,14 +390,11 @@ ButtonLogin:
     }
     
     
-    Run, chrome.exe --incognito https://gateway.usps.com/eAdmin/view/signin
-    Sleep 5000
-    Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%{TAB}%Pass%{ENTER}
-    Return
-}    ; <---Comment out the bracket once I'm working on this again
-    /* ; <---Comment out the slashasterisk once I'm working on this again
+
+;}    ; <---Comment out the bracket once I'm working on this again
+    ;/* ; <---Comment out the slashasterisk once I'm working on this again
     
-    
+    ; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
     
     MDRVar := ""
     If FileExist("C:\Postal1\run-mdclient.bat")
@@ -433,19 +430,26 @@ ButtonLogin:
         MsgBox, Please tell Marvin - something MAY not be quite right with your Mail.Dat Client Install.
     }
     Sleep, 200
+
+    
+    Run, chrome.exe --incognito https://gateway.usps.com/eAdmin/view/signin
+    Sleep 5000
+    Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%{TAB}%Pass%{ENTER}
+    Return    
+}
     ;MsgBox, Hopefull this doesn't popup until I'm ready for it...
     ;MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
-	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
-    IEPointer := IEGet("usps")
-    SplashTextOn, 400, 100, Wait for it…, Please press "Space" once the page is done loading.
-    KeyWait, Space, D
-    SplashTextOff
-    Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
-    Sleep, 100
-    Send, {Tab}%Pass%{Enter}
-    ;MsgBox, %User% | %Pass%
-	Return
-}
+	;Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe -incognito https://gateway.usps.com/eAdmin/view/signin
+    ;IEPointer := IEGet("usps")
+    ;SplashTextOn, 400, 100, Wait for it…, Please press "Space" once the page is done loading.
+    ;KeyWait, Space, D
+    ;SplashTextOff
+    ;Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%
+    ;Sleep, 100
+    ;Send, {Tab}%Pass%{Enter}
+    ;;MsgBox, %User% | %Pass%
+	;Return
+;}
 
 
 
