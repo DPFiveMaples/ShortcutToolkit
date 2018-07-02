@@ -392,17 +392,18 @@ ButtonLogin:
     
 
 ;}    ; <---Comment out the bracket once I'm working on this again
-    ;/* ; <---Comment out the slashasterisk once I'm working on this again
-    
-    ; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
-    
-    MDClientVar := ""      ; MDRVar := ""
-    If FileExist("C:\Postal1\run-mdclient.bat")
-    {
-        MDClientVar := "C:\Postal1\"
     }
-    Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
-    {
+;/* ; <---Comment out the slashasterisk once I'm working on this again
+
+; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
+
+MDClientVar := ""      ; MDRVar := ""
+If FileExist("C:\Postal1\run-mdclient.bat")
+{
+MDClientVar := "C:\Postal1\"
+}
+Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
+{
         MDClientVar := "C:\Postal1\MDRClient-win64-PROD\"
     }
     Else If FileExist("C:\Program Files (x86)\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
@@ -439,15 +440,11 @@ ButtonLogin:
         Sleep, 100
         SplashTextOff
         Sleep, 100
-        SendInput, {BackSpace 3}%User%
-        Sleep, 50
+        Send, {BackSpace 3}%User%
+        Sleep, 100
         Send, {Tab}
-        Sleep, 50
-        SendInput, %Pass%
-        Sleep, 50
-        Send, {Tab 2}
-        Sleep, 50
-        Send, {Enter}
+        Sleep, 100
+        Send, %Pass%{Enter}
         WinWait, PostalOne! Mail.dat Client Application
         WinWaitClose
     }
