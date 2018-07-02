@@ -396,26 +396,44 @@ ButtonLogin:
     
     ; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
     
-    MDRVar := ""
+    MDClientVar := ""      ; MDRVar := ""
     If FileExist("C:\Postal1\run-mdclient.bat")
     {
-        MDClientVar := "C:\Postal1\run-mdclient.bat"
+        MDClientVar := "C:\Postal1\"
+    }
+    Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
+    {
+        MDClientVar := "C:\Postal1\MDRClient-win64-PROD\"
     }
     Else If FileExist("C:\Program Files (x86)\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
     {
-        MDClientVar := "C:\Program Files (x86)\Postal1\MDRClient-win64-PROD\run-mdclient.bat"
+        MDClientVar := "C:\Program Files (x86)\Postal1\MDRClient-win64-PROD\"
     }
     Else If FileExist("C:\Program Files\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
     {
-        MDClientVar := "C:\Program Files\Postal1\MDRClient-win64-PROD\run-mdclient.bat"
+        MDClientVar := "C:\Program Files\Postal1\MDRClient-win64-PROD\"
     }
     Else If FileExist("C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat")
     {
-        MDClientVar := "C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat"
+        MDClientVar := "C:\Program Files (x86)\MDRClient-win64-PROD\"
+    }
+    Else
+    {
+        MDClientVar := "ERROR!!!"
+        MsgBox, Please see Marvin - something went wrong. Please screenshot and send him the next screen after this one.
+        Msgbox, Error Data: %A_Username% | %MDClientVar%
+        Reload 
+        Return
     }
     If MDClientVar <> ""
     {
-        Run, C:\Program Files (x86)\MDRClient-win64-PROD\run-mdclient.bat, C:\Program Files (x86)\MDRClient-win64-PROD\, Max
+        
+        ;Msgbox, %MDClientVar%run-mdclient.bat  ; For testing only - uncomment out next three lines if testing
+        ;Reload 
+        ;return
+        
+        
+        Run, %MDClientVar%run-mdclient.bat, %MDClientVar%, Max
         SplashTextOn, 400, 100, Wait for it…, Please Left Click the "Username" field once the Uploader is open and ready for input then hit "Scroll Lock" to have your credentials entered and login.
         KeyWait, ScrollLock, D
         Sleep, 100
