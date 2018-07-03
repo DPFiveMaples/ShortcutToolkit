@@ -7,8 +7,32 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetTitleMatchMode, 2 ; This let's any window that partially matches the given name get activated
 #IfWinActive Excel
 ^+j::
-XL := ComObjActive("Excel.Application") 
+
+WinActivate % "ahk_id " DllCall("GetDesktopWindow","ptr")
+Try
+{
+    XL := ComObjActive("Excel.Application") 
+}
+
+Catch
+{
+    MsgBox, No Excel File Found
+    Return
+}
 ;handle to running application
+
+; Debug COdeAY
+/*
+MsgBox, 4, , Is it working? (Press YES or NO)
+IfMsgBox No
+{
+    MsgBox, Error!
+    Reload
+    return
+}
+*/
+; End of Debug Code
+
 qty := XL.Worksheets.Count
 WBName = % XL.ActiveWorkbook.Name
 SplitName := StrSplit(WBName, ".").1
@@ -30,8 +54,9 @@ Send, {shift down}%SheetName%-converted-{shift up}
 Send,%SplitName%
 Send,{tab}
 Sleep, 500
-if (SheetNum = 1){
-Send, {down 12}
+if (SheetNum = 1)
+{
+    Send, {down 12}
 }
 ; ^this if statement will only change the file type on the first loop, it stays as text after the first save
 Send, {enter}{tab}{enter}{enter}
