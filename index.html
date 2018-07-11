@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="styles.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="magic_script.js"></script>	
+	<meta charset="utf-8">
 </head>
 <body>
 <h1>Process Checklist</h1>
@@ -62,6 +63,7 @@
 			<li><input type="checkbox">Check off the fields imported and TRI on worksheet</li>
 			<li class="merge"><input type="checkbox">If merge, compare random records to original data file</li>
 			<li><input type="checkbox">Go through standard selects and mark on worksheet</li>
+			<li class="merge"><input type="checkbox">If merge with salutation, run "Bad Salutation" select</li>
 			<li class="merge"><input type="checkbox">If merge with salutation, run “Bad Salutation” select</li>
 			
 			<li class="foreign"><input type="checkbox">If foreign records:
@@ -256,7 +258,11 @@
 					<li><input type="checkbox">Set up presort sequence number
 						<ul>
 							<li><input type="checkbox">Font is Ocr B and 7pt size</li>
+<<<<<<< HEAD
+							<li><input type="checkbox">Has caret (unless "No caret" is on WO)</li>
+=======
 							<li><input type="checkbox">Has caret (unless “No caret” is on WO)</li>
+>>>>>>> 0e231425578499550450fc100cebc23da7673b8d
 							<li><input type="checkbox">Located in correct position. See sample placement guide</li>
 						</ul>
 					</li>
