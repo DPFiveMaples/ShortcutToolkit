@@ -16,7 +16,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="magic_script.js"></script>	
 </head>
-<body>
+<body onbeforeunload="return myFunction()">
 <h1>Process Checklist</h1>
 	<div class="jobinfo">
 	Job Name:&nbsp;<textarea rows="1" cols="40"></textarea>&emsp;Work Order:&nbsp;<textarea rows="1" cols="6"></textarea>&emsp;Date:&nbsp;<textarea rows="1" cols="8"></textarea>
@@ -47,7 +47,7 @@
 	
 	<div id="checklist">
 		<ul>
-			<li><input type="checkbox">Read work order, initial and date, update MailShop</li>
+			<li><input type="checkbox">Read work order, initial and date, update MailShop with DP start, DP initials, and DP status</li>
 			<li class="merge"><input type="checkbox">If Merge:
 				<ul>
 					<li><input type="checkbox">Review all pieces, identify all merge fields</li>
@@ -62,7 +62,7 @@
 			<li><input type="checkbox">Check off the fields imported and TRI on worksheet</li>
 			<li class="merge"><input type="checkbox">If merge, compare random records to original data file</li>
 			<li><input type="checkbox">Go through standard selects and mark on worksheet</li>
-			<li class="merge"><input type="checkbox">If merge with salutation, run “Bad Salutation” select</li>
+			<li class="merge"><input type="checkbox">If merge with salutation, run "Bad Salutation" select</li>
 			
 			<li class="foreign"><input type="checkbox">If foreign records:
 				<ul>
@@ -84,13 +84,13 @@
 				<ul>
 					<li><input type="checkbox">Write last four digits of NCOA file on worksheet</li>
 					<li><input type="checkbox">Save cert in NCOA folder</li>
+					<li><input type="checkbox">Record number of NCOA'd records on work order</li>
 					<li><input type="checkbox">Copy CSV and rename in NCOA folder</li>
 					<li><input type="checkbox">Export records to NCOA folder and fix warnings</li>
 					<li class="notsecure"><input type="checkbox">Send zipped folder to client</li>
 					<li class="secure"><input type="checkbox">Email PM informing them that the files are saved in the job folder</li>
 					<li><input type="checkbox">Use NCOA BAD select to modify and hide bad files</li>
 					<li><input type="checkbox">Write number of NCOA bad records on worksheet</li>
-					<li><input type="checkbox">Record number of NCOA'd records on work order</li>
 				</ul>
 			</li>		
 			<li class="dedupe"><input type="checkbox">If De-Dupe:
@@ -100,8 +100,8 @@
 					<li><input type="checkbox">Write totals for each index on "pre" report</li>
 					<li><input type="checkbox">Mark total duplicates hidden on worksheet</li>
 					<li><input type="checkbox">Print "post-dedupe" distribution report</li>
-					<li><input type="checkbox">Write final totals for dom. and for. on worksheet</li>
 					<li><input type="checkbox">Remove suppression files if applicable</li>
+					<li><input type="checkbox">Write final totals for dom. and for. on worksheet</li>
 				</ul>
 			</li>	
 			<li class="foreign"><input type="checkbox">If foreign records, part 2:
@@ -200,8 +200,8 @@
 				</ul>
 			</li>
 			<li class="merge"><input type="checkbox">If merge</li>
-<!--hide-->	<li class="notmerge"><input type="checkbox">All items on work order checked off</li>
-			<li class="notmerge"><input type="checkbox">End date on work order, final quantity and end date in MailShop</li>			
+			<li class="notmerge"><input type="checkbox">All items on work order checked off and end date filled out</li>
+			<li class="notmerge"><input type="checkbox">Update Mailshop with final quantity, end date, and DP status</li>				
 			<li class="letter"><input type="checkbox">Create CSV for Letter pieces
 				<ul>
 					<li class="letter"><b>Letter</b></li>
@@ -256,7 +256,7 @@
 					<li><input type="checkbox">Set up presort sequence number
 						<ul>
 							<li><input type="checkbox">Font is Ocr B and 7pt size</li>
-							<li><input type="checkbox">Has caret (unless “No caret” is on WO)</li>
+							<li><input type="checkbox">Has caret (unless "No caret" is on WO)</li>
 							<li><input type="checkbox">Located in correct position. See sample placement guide</li>
 						</ul>
 					</li>
@@ -266,9 +266,9 @@
 			<li class="merge"><input type="checkbox">Ensure all pieces link to same logo</li>
 			<li class="merge"><input type="checkbox">If on <span class="clientstock">client stock, print on and scan to PDF</span><span class="fmstock">house paper, print on office printer</span></li>
 			<li class="merge"><input type="checkbox">All items on work order checked off (Except print dept items)</li>
-			<li class="merge"><input type="checkbox">Update final quantity in Mailshop, leave end date blank in Mailshop and on WO</li>
 			<li class="merge"><input type="checkbox">Email the PM <span class="notsecure">your proofs</span><span class="secure">letting them know proofs are in the job folder</span></li>
 			<li class="merge"><input type="checkbox">Update schedule</li>
+			<li class="merge"><input type="checkbox">Update Mailshop with final quantity and variable proof date/version</li>
 			<li class="merge"><input type="checkbox">After approval, prepare file for printing
 				<ul>
 					<li><input type="checkbox">Proofing box removed</li>
@@ -278,6 +278,7 @@
 					<li><input type="checkbox">Have another DP member 3rd party proof job</li>
 					<li><input type="checkbox">If job has external production proofs (see schedule), email production that job is approved</li>
 					<li><input type="checkbox">Mark approved on schedule and cross out DP section</li>
+					<li><input type="checkbox">Update Mailshop with end date, DP status, and Proof approval.</li>
 				</ul>
 			</li>
 		</ul>

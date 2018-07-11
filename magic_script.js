@@ -116,7 +116,10 @@ $(document).ready(function(){
 
 });	
 
-
+function myFunction() {
+    return "Are you sure you want to leave?";
+}
+	
 
 
 
