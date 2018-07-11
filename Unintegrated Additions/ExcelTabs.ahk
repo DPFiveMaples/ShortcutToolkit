@@ -8,7 +8,6 @@ SetTitleMatchMode, 2 ; This let's any window that partially matches the given na
 #IfWinActive Excel
 ^+j::
 
-WinActivate % "ahk_id " DllCall("GetDesktopWindow","ptr")
 Try
 {
     XL := ComObjActive("Excel.Application") 
@@ -21,7 +20,7 @@ Catch
 }
 ;handle to running application
 
-; Debug COdeAY
+; Debug COde
 /*
 MsgBox, 4, , Is it working? (Press YES or NO)
 IfMsgBox No
