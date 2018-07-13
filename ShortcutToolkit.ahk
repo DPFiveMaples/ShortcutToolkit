@@ -29,15 +29,10 @@ NewVer = 0
 
 ; Key	Syntax
 ; Alt       !
-<<<<<<< HEAD
+
 ; Ctrl      ^
 ; Shift     +
 ; Win Logo  #
-=======
-; Ctrl	    ^
-; Shift	    +
-; Win Logo	#
->>>>>>> parent of 0e23142... Standardized tabs/spaces & incremented version
 
 
 
@@ -158,12 +153,11 @@ Return
 ;==  Useful Hotkeys Section
 ;==========================================================
 
-<<<<<<< HEAD
+
 ::Jam::James Chase`t8023875157`t110 ;c ?? Populate Warehouse Name & Number ?? Type "jam" & Hit Tab OR just press the Warehouse NDC SCF Info button | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
 ; :*:jam`t::James Chase`t8023875157`t110 ; Old - replaced by above
-=======
-:*:jam`t::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "jam" & Hit Tab OR just press the Warehouse NDC SCF Info button | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
->>>>>>> parent of 0e23142... Standardized tabs/spaces & incremented version
+
+
 
 ButtonWarehouseNDCSCFInfo:
 {
@@ -403,7 +397,6 @@ ButtonLogin:
     
 
 ;}    ; <---Comment out the bracket once I'm working on this again
-    }
 ;/* ; <---Comment out the slashasterisk once I'm working on this again
 
 ; OK, this WHOLE THING should be triggered by either Kendra's hotkey, or pressing "Scroll Lock" when in the Postal One uploader.
