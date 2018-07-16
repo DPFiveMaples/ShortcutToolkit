@@ -36,7 +36,6 @@ NewVer = 0
 
 
 
-
 ;===========================================================
 ;==  Update Module
 ;===========================================================
@@ -1063,14 +1062,39 @@ return
 
 
 
+;==========================================================
+;==  TEST SUITE (All Tests - if fail, raise INSTANT popup)
+;==========================================================
+
+#IfWinActive
+
+^+b:: ; This is the "Test Suite" - run it and it will complain of issues. Once run, it reboots the script for a clean working state.
+{
+    If ("(?)" = "(ツ)")
+        Msgbox, Hey - someone screwed up the ASCII/Unicode encoding - see Marvin.
+	Reload
+	ExitApp
+    ; Return
+}
 
 
-/* 
-;===========================================================
-;==  NOTES
-;===========================================================
-	
-	~ = Passthrough, at least when used as a prefix for a button combo, so ~^c would be Ctrl+c that also sends the same command to the native system
-	^ = Ctrl
-	# = Win key (I think?)
-	! = Alt Key (I think)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
