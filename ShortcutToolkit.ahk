@@ -3,7 +3,7 @@
 ;==========================================================
 [INI_Section]
 version=28
-MailShopVersion=3
+MailShopVersion=4
 
 
 */
