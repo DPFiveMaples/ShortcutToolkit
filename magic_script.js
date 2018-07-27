@@ -12,6 +12,8 @@ $(document).ready(function(){
 	$(".letter").hide();
 	$(".reply").hide();
 	$(".envelope").hide();
+	$(".comingle").hide();
+	$(".dropselse").hide();
 	
 	
 /*checkbox conditions*/	
@@ -113,6 +115,23 @@ $(document).ready(function(){
 		}
 	});
 	
+		$("#DropsElseCheck").click(function(){
+		if($("#DropsElseCheck").is(":checked")){
+			$(".dropselse").show();
+		} else {
+			$(".dropselse").hide();
+		}
+	});
+	
+		$("#ComingleCheck").click(function(){
+		if($("#ComingleCheck").is(":checked")){
+			$(".comingle").show();
+			$(".notcomingle").hide();
+		} else {
+			$(".comingle").hide();
+			$(".notcomingle").show();
+		}
+	});
 
 });	
 

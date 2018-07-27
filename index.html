@@ -38,30 +38,33 @@
 				<ul>
 					<li><input id="LetterCheck" type="checkbox">Letter</li>
 					<li><input id="ReplyCheck" type="checkbox">Reply</li>
-					<li><input id="EnvelopeCheck" type="checkbox">Envelope/Postcard</li>
+					<li><input id="EnvelopeCheck" type="checkbox">Envelope/PC</li>
 				</ul>
 			</li>
+			<li><input id="ComingleCheck" type="checkbox">Comingle</li>
+			<li><input id="DropsElseCheck" type="checkbox">Drops Elsewhere</li>
 		</ul>
 	</div>
 	</fieldset>
 	
 	<div id="checklist">
 		<ul>
-			<li><input type="checkbox">Read work order, initial and date, update MailShop with DP start, DP initials, and DP status</li>
+			<li><input type="checkbox">Read work order, initial and date, <a href="http://watson/mediawiki/index.php/Mailshop_Process_for_DP" target="_blank">update MailShop</a> with DP start, DP initials, and DP status</li>
+			<li class="secure"><input type="checkbox">Add the job to the Secure Job Deletion Schedule</li>
 			<li class="merge"><input type="checkbox">If Merge:
 				<ul>
 					<li><input type="checkbox">Review all pieces, identify all merge fields</li>
-					<li><input type="checkbox">If needed, code ask strings and LG date per WO</li>
+					<li><input type="checkbox">If needed, <a href="http://watson/mediawiki/index.php/Ask_String_Table" target="_blank">code ask strings</a> and LG date per WO</li>
 				</ul>
 			</li>
 			<li><input type="checkbox">Convert data file to text (tab delimited) if needed (formating)
 				<ul>
-					<li><input type="checkbox">If .txt, select double quotes while loading file</li>
+					<li><input type="checkbox">If .txt, select double quotes while <a href="http://watson/mediawiki/index.php/List_Loading" target="_blank">loading file</a></li>
 				</ul>
 			</li>
 			<li><input type="checkbox">Check off the fields imported and TRI on worksheet</li>
 			<li class="merge"><input type="checkbox">If merge, compare random records to original data file</li>
-			<li><input type="checkbox">Go through standard selects and mark on worksheet</li>
+			<li><input type="checkbox">Go through standard <a href="http://watson/mediawiki/index.php/Selects" target="_blank">selects</a> and mark on worksheet</li>
 			<li class="merge"><input type="checkbox">If merge with salutation, run "Bad Salutation" select</li>
 			
 			<li class="foreign"><input type="checkbox">If foreign records:
@@ -70,7 +73,7 @@
 					<li><input type="checkbox">Move CSZ to just City field</li>
 				</ul>
 			</li>
-			<li><input type="checkbox">CASS <span class="foreign">domestic </span>records
+			<li><input type="checkbox"><a href="http://watson/mediawiki/index.php/Coding_Accuracy_Support_System" target="_blank">CASS</a> <span class="foreign">domestic </span>records
 				<ul>
 					<li><input type="checkbox">Save in job folder</li>
 					<li><input type="checkbox">Verify quantity processed matches total coded</li>
@@ -80,7 +83,7 @@
 				</ul>
 			</li>	
 			<li><input type="checkbox">Check for Add1 not empty and mark if Add1 is used</li>
-			<li class="NCOA"><input type="checkbox">If NCOA:
+			<li class="NCOA"><input type="checkbox"><a href="http://watson/mediawiki/index.php/NCOA" target="_blank">If NCOA<a>:
 				<ul>
 					<li><input type="checkbox">Write last four digits of NCOA file on worksheet</li>
 					<li><input type="checkbox">Save cert in NCOA folder</li>
@@ -93,10 +96,10 @@
 					<li><input type="checkbox">Write number of NCOA bad records on worksheet</li>
 				</ul>
 			</li>		
-			<li class="dedupe"><input type="checkbox">If De-Dupe:
+			<li class="dedupe"><input type="checkbox"><a href="http://watson/mediawiki/index.php/Duplicate_Removal" target="_blank">If De-Dupe</a>:
 				<ul>
 					<li><input type="checkbox">Record number of previously hidden records</li>
-					<li><input type="checkbox">Print a "pre-dedupe" distribution report</li>
+					<li><input type="checkbox">Print a "pre-dedupe" <a href="http://watson/mediawiki/index.php/Distribution_Report" target="_blank">distribution report</a></li>
 					<li><input type="checkbox">Write totals for each index on "pre" report</li>
 					<li><input type="checkbox">Mark total duplicates hidden on worksheet</li>
 					<li><input type="checkbox">Print "post-dedupe" distribution report</li>
@@ -115,11 +118,12 @@
 			</li>			
 			<li><input type="checkbox">Update work order with final totals<span  class="foreign">-domestic and foreign</span></li>
 			<li><input type="checkbox">Email final totals to print department if applicable</li>
-			<li class="fcspr"><input type="checkbox">If Retail Stamp:
+			<li class="fcspr"><input type="checkbox">If <a href="http://watson/mediawiki/index.php/Retail_Stamp_Job" target="_blank">Retail Stamp</a>:
 				<ul>
 					<li class="merge"><input type="checkbox">If merge, reorder if needed, then create presort #</li>
 				</ul>
 			</li>
+			<li class="comingle"><input type="checkbox">If <a href="http://watson/mediawiki/index.php/Comingling" target="_blank">Comingle</a>, follow wiki steps before proceeding</li>
 			<li class="sorted"><input type="checkbox">Postal sort
 				<ul>
 					<li><input type="checkbox">Correct select for sort <span  class="foreign">(Foreign or no Foreign?)</span></li>
@@ -138,7 +142,8 @@
 							<li><input type="checkbox">If precancelled stamp, select addt'l permit</li>
 						</ul>
 					</li>
-					<li><input type="checkbox">Check box for NDC or SCF
+					<li class="dropselse"><input type="checkbox">Enter the zip code for where the job is dropping</li>
+					<li class="notcomingle"><input type="checkbox">Check box for <a href="http://watson/mediawiki/index.php/NDC/SCF" target="_blank">NDC or SCF</a>
 						<ul>
 							<li><input type="checkbox">If not profitable, cross out Geo</li>
 							<li><input type="checkbox">If profitable, write on work order and print page</li>
@@ -147,26 +152,28 @@
 				</ul>
 			</li>
 			<li class="sorted"><input type="checkbox">Verify record count in sort matches work order</li>
-			<li class="sorted"><input type="checkbox">Print qualification report
+			<li class="sorted notcomingle"><input type="checkbox">Print qualification report
 				<ul>
 					<li><input type="checkbox">Review printout for accuracy (thickness, weight and class/category of mail)</li>
 					<li class="ndcscf"><input type="checkbox">If NDC/SCF-separate last page of report</li>
 				</ul>
 			</li>
-			<li class="sorted"><input type="checkbox">Print 3602N report
+			<li class="sorted notcomingle"><input type="checkbox">Print 3602N report
 				<ul>
 					<li><input type="checkbox">Enter move update method</li>
 					<li><input type="checkbox">Review printout for accuracy (class, cat, # of pieces, postage type, permit, crid, mu method)</li>
 				</ul>
 			</li>
-			<li class="sorted"><input type="checkbox">Print container tags
+			<li class="sorted notcomingle"><input type="checkbox">Print container tags
 				<ul>
+					<li class="dropselse"><input type="checkbox">Change tag location to where it will be dropping</li>
 					<li><input type="checkbox">Verify for accuracy (# of streams and trays)</li>
 				</ul>
 			</li>
-			<li class="sorted"><input type="checkbox">Do Track N Trace - follow wiki steps</li>
-			<li class="sorted"><input type="checkbox">Do Mail.dat - follow wiki steps
-				<ul>
+			<li class="sorted dropselse"><input type="checkbox">Check if <a href="http://watson/mediawiki/index.php/Pallet_placards" target="_blank">pallet placards</a> are needed and print</li>
+			<li class="sorted"><input type="checkbox">Do <a href="http://watson/mediawiki/index.php/Track_N_Trace" target="_blank">Track N Trace</a> - follow wiki steps</li>
+			<li class="sorted"><input type="checkbox">Do <a href="http://watson/mediawiki/index.php/Mail.dat" target="_blank">Mail.dat</a> - follow wiki steps
+				<ul class="notcomingle">
 					<li><input type="checkbox">Upload to Postal One</li>
 					<li><input type="checkbox">Verify upload and accuracy on USPS website</li>
 				</ul>
@@ -181,10 +188,11 @@
 			<li><input type="checkbox">Fill out label layout on work order<span class="foreign"> (if foreign, fill out too)</span></li>
 			<li><input type="checkbox">Create labels
 				<ul>
+					<li class="comingle"><input type="checkbox">Comingle fields included</li>
 					<li><input type="checkbox">Correct fields from worksheet</li>
 					<li><input type="checkbox">Required fields are locked</li>
 					<li><input type="checkbox">Scroll through preview labels</li>
-					<li><input type="checkbox">Included VPC ### for window envelopes</li>
+					<li><input type="checkbox">Included VPC ### for <a href="http://watson/mediawiki/index.php/Window_Envelopes" target="_blank">window envelopes</a></li>
 					<li><input type="checkbox">Save to X and write file name on work order</li>
 					<li class="pslabels"><input type="checkbox">Printed manually (P/S labels only)</li>
 					<li class="pslabels"><input type="checkbox">Printed return address P/S labels if applicable</li>
@@ -199,6 +207,7 @@
 					<li class="foreign"><input type="checkbox">If foreign, check if ordered by country</li>
 				</ul>
 			</li>
+			<li class="comingle"><input type="checkbox">Order form and other files sent to firebird</li>
 			<li class="merge"><input type="checkbox">If merge</li>
 			<li class="notmerge"><input type="checkbox">All items on work order checked off and end date filled out</li>
 			<li class="notmerge"><input type="checkbox">Update Mailshop with final quantity, end date, and DP status</li>				
@@ -273,12 +282,13 @@
 				<ul>
 					<li><input type="checkbox">Proofing box removed</li>
 					<li><input type="checkbox">Imposition correct for paper size</li>
+					<li><input type="checkbox">Compose 2000 sheets at a time for normal stock, 1000 sheets for heavy stock</li>
 					<li><input type="checkbox">Check output PDFs for errors</li>
 					<li><input type="checkbox">Verify first and last records with your worksheet</li>
 					<li><input type="checkbox">Have another DP member 3rd party proof job</li>
 					<li><input type="checkbox">If job has external production proofs (see schedule), email production that job is approved</li>
 					<li><input type="checkbox">Mark approved on schedule and cross out DP section</li>
-					<li><input type="checkbox">Update Mailshop with end date, DP status, and Proof approval.</li>
+					<li><input type="checkbox"><a href="http://watson/mediawiki/index.php/Mailshop_Process_for_DP" target="_blank">Update MailShop</a> with end date, DP status, and Proof approval.</li>
 				</ul>
 			</li>
 		</ul>
