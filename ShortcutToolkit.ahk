@@ -3,7 +3,7 @@
 ;==========================================================
 [INI_Section]
 version=27
-MailShopVersion=5
+MailShopVersion=3
 
 
 */
@@ -110,6 +110,8 @@ if (CurrentVer < NewVer)
 Return
 }
 
+
+
 ButtonForceUpdateToolkit:
 UpdateScript:
 ^+#u:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+u | Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
@@ -127,8 +129,11 @@ UpdateScript:
 ;===========================================================
 
 
-SetTimer MailShopUpdateCheck, 60000 ; Check each minute
-;Return
+If (A_ComputerName = "DP08-DT")
+    {
+    SetTimer MailShopUpdateCheck, 60000 ; Check each minute
+    }
+    
 
 MailShopUpdateCheck:
 If (A_Hour = 03 And A_Min = 12)
@@ -181,11 +186,45 @@ MailShopUpdateScript:
 
     ;TODO Insert code to have it check for and close MailShop, as well as then check for a lock file.
 
-    FileCopyDir, X:\DP Use\StagedMailshopUpdates C:\Program Files\MailShop ;*[ShortcutToolkit]
-	;Progress, w250,,, Hold yer ponies,  I'm updating…
-	MsgBox Your MailShop installation has been updated!
-    Return
+    Progress, w250,,, Updating Mailshop - Please hold your ponies…
+    Progress, 10
+    FileCopy, X:\DP Use\StagedMailshopUpdates\MSApp2k.mdb, C:\Program Files\MailShop\OLD\MSApp2k.mdb.OLD, 1
+    Progress, 50
+    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk
+    Progress, 75
+    ErrorCount := CopyFilesAndFolders("X:\DP Use\StagedMailshopUpdates\*.*", "C:\Program Files\MailShop", 1)
+    Progress, 100
+    Progress, Off
+    If ErrorCount <> 0
+        MsgBox %ErrorCount% files/folders could not be copied - your update MAY not have completed successfully - please see Marvin.
+    Else
+        MsgBox Your MailShop installation has been updated - enjoy!
+    Reload
+	ExitApp
 }
+
+
+; The following example copies all files and folders inside a folder to a different folder:
+
+
+CopyFilesAndFolders(SourcePattern, DestinationFolder, DoOverwrite = false)
+; Copies all files and folders matching SourcePattern into the folder named DestinationFolder and
+; returns the number of files/folders that could not be copied.
+{
+    ; First copy all the files (but not the folders):
+    FileCopy, %SourcePattern%, %DestinationFolder%, %DoOverwrite%
+    ErrorCount := ErrorLevel
+    ; Now copy all the folders:
+    Loop, %SourcePattern%, 2  ; 2 means "retrieve folders only".
+    {
+        FileCopyDir, %A_LoopFileFullPath%, %DestinationFolder%\%A_LoopFileName%, %DoOverwrite%
+        ErrorCount += ErrorLevel
+        if ErrorLevel  ; Report each problem folder by name.
+            MsgBox Could not copy %A_LoopFileFullPath% into %DestinationFolder%.
+    }
+    return ErrorCount
+}
+
 
 
 
