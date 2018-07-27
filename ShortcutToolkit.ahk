@@ -3,6 +3,7 @@
 ;==========================================================
 [INI_Section]
 version=27
+MailShopVersion=5
 
 
 */
@@ -98,7 +99,7 @@ VersionCheck:
 ; FileReadLine, %CurrentVer%, ShortcutToolkit.ahk, 5
 ; FileReadLine, %NewVer%, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, 5
 IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
-UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ;*[ShortcutToolkit]
+UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
 IniRead, NewVer, JunkKit.ahk, INI_Section, version
 FileDelete, JunkKit.ahk
 if (CurrentVer < NewVer)
@@ -121,14 +122,71 @@ UpdateScript:
 }
 
 
-; Stub for future work:
-; https://www.autohotkey.com/download/AutoCorrect.ahk
+;===========================================================
+;==  Mailshop Update Module
+;===========================================================
 
-^+#a::
+
+SetTimer MailShopUpdateCheck, 60000 ; Check each minute
+;Return
+
+MailShopUpdateCheck:
+If (A_Hour = 03 And A_Min = 12)
+    {
+	Progress, w250,,, Please hold,  I'm checking for a mailshop update…
+	Sleep, 2000
+	Progress, off
+	gosub MailShopVersionCheck
+	}
+Return
+
+; The following is for testing ONLY, and shouldn't be used otherwise.
+/*
+SetTimer MailShopUpdateCheck, 1000 ; Check each second
+Return
+
+MailShopUpdateCheck:
+If (A_Hour = 13)
+	{
+	Msgbox, Hey!
+	Progress, w250,,, Please hold,  I'm checking for a mailshop update…
+	Sleep, 10000
+	Progress, off
+	gosub MailShopVersionCheck
+	}
+Return
+*/
+; End Testing Snippit
+
+
+MailShopVersionCheck:
+^+#F6::
 {
-    Run AutoCorrect.ahk
-    return
+    IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, MailShopVersion
+    ;UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
+    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/MB_Add_MailShop_Updater_To_Toolkit/ShortcutToolkit.ahk, JunkKit.ahk ; TESTING
+    IniRead, NewVer, JunkKit.ahk, INI_Section, MailShopVersion
+    FileDelete, JunkKit.ahk
+    if (CurrentVer < NewVer)
+    	{
+    	gosub MailShopUpdateScript ; Insert the following above if you need to check anything in the future: MsgBox, %CurrentVer% & %NewVer%
+    	}
+    Return
 }
+
+;ButtonForceUpdateMailShop:
+MailShopUpdateScript:
+^+#F7:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+F7 | Typing Ctrl+Shift+Win+F7 will force an update of MailShop
+{
+
+    ;TODO Insert code to have it check for and close MailShop, as well as then check for a lock file.
+
+    FileCopyDir, X:\DP Use\StagedMailshopUpdates C:\Program Files\MailShop ;*[ShortcutToolkit]
+	;Progress, w250,,, Hold yer ponies,  I'm updating…
+	MsgBox Your MailShop installation has been updated!
+    Return
+}
+
 
 
 ;==========================================================
@@ -207,7 +265,7 @@ ButtonLaunchWiki:
 ^F1::gosub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
 
 
-^!k::
+^!k::   ; Believe it or not, this is more of a test construct than anything that does "Work".
 {
 test := A_UserName
 If test = "kendrak"
@@ -220,6 +278,17 @@ Else
 	MsgBox, Kendra is Kewl!
 	return
 	}
+}
+
+
+
+; Stub for future work:
+; https://www.autohotkey.com/download/AutoCorrect.ahk
+
+^+#a::
+{
+    Run AutoCorrect.ahk
+    return
 }
 
 ;===========================================================
