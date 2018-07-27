@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=28
+version=29
 MailShopVersion=6
 
 
@@ -34,6 +34,26 @@ NewVer = 0
 ; Ctrl      ^
 ; Shift     +
 ; Win Logo  #
+
+
+
+;==========================================================
+;==  Beta User Enrollment
+;==========================================================
+
+BetaTesters := ["kendrak", "marvinb", "codyb"]
+BetaKey := HasVal(BetaTesters,A_UserName)
+
+HasVal(haystack, needle)
+{
+	if !(IsObject(haystack)) || (haystack.Length() = 0)
+		return 0
+	for index, value in haystack
+		if (value = needle)
+			return index
+	return 0
+}
+
 
 
 
@@ -130,11 +150,7 @@ UpdateScript:
 ;===========================================================
 
 
-If (A_ComputerName = "DP08-DT")
-    {
-    SetTimer MailShopUpdateCheck, 60000 ; Check each minute
-    }
-Else If (A_ComputerName = "DP09-DT")
+If (BetaKey > 0)
     {
     SetTimer MailShopUpdateCheck, 60000 ; Check each minute
     }
