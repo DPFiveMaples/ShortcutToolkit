@@ -3,7 +3,7 @@
 ;==========================================================
 [INI_Section]
 version=28
-MailShopVersion=3
+MailShopVersion=6
 
 
 */
@@ -188,22 +188,29 @@ MailShopUpdateScript:
 {
 
     ;TODO Insert code to have it check for and close MailShop, as well as then check for a lock file.
-
-    Progress, w250,,, Updating Mailshop - Please hold your ponies…
-    Progress, 10
-    FileCopy, X:\DP Use\StagedMailshopUpdates\MSApp2k.mdb, C:\Program Files\MailShop\OLD\MSApp2k.mdb.OLD, 1
-    Progress, 50
-    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk
-    Progress, 75
-    ErrorCount := CopyFilesAndFolders("X:\DP Use\StagedMailshopUpdates\*.*", "C:\Program Files\MailShop", 1)
-    Progress, 100
-    Progress, Off
-    If ErrorCount <> 0
-        MsgBox %ErrorCount% files/folders could not be copied - your update MAY not have completed successfully - please see Marvin.
-    Else
-        MsgBox Your MailShop installation has been updated - enjoy!
-    Reload
-	ExitApp
+    if FileExist("MSApp2k.ldb")
+    {
+        msgbox % "MailShop could NOT be updated last night due to appearing to be left open… Please see Marvin with questions."
+    }
+    else
+    {
+        Progress, w250,,, Updating Mailshop - Please hold your ponies…
+        Progress, 10
+        FileCopy, X:\DP Use\StagedMailshopUpdates\MSApp2k.mdb, C:\Program Files\MailShop\OLD\MSApp2k.mdb.OLD, 1
+        Progress, 50
+        UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk
+        Progress, 75
+        ErrorCount := CopyFilesAndFolders("X:\DP Use\StagedMailshopUpdates\*.*", "C:\Program Files\MailShop", 1)
+        Progress, 100
+        Progress, Off
+        If ErrorCount <> 0
+            MsgBox %ErrorCount% files/folders could not be copied - your update MAY not have completed successfully - please see Marvin.
+        Else
+            MsgBox Your MailShop installation has been updated - enjoy!
+        Reload
+    	ExitApp
+    }
+    Return
 }
 
 
