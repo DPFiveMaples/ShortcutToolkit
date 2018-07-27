@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=27
+version=28
 MailShopVersion=3
 
 
@@ -133,7 +133,10 @@ If (A_ComputerName = "DP08-DT")
     {
     SetTimer MailShopUpdateCheck, 60000 ; Check each minute
     }
-    
+Else If (A_ComputerName = "DP09-DT")
+    {
+    SetTimer MailShopUpdateCheck, 60000 ; Check each minute
+    }
 
 MailShopUpdateCheck:
 If (A_Hour = 03 And A_Min = 12)
