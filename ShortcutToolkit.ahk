@@ -3,6 +3,7 @@
 ;==========================================================
 [INI_Section]
 version=27
+MailShopVersion=3
 
 
 */
@@ -29,7 +30,6 @@ NewVer = 0
 
 ; Key	Syntax
 ; Alt       !
-
 ; Ctrl      ^
 ; Shift     +
 ; Win Logo  #
@@ -49,14 +49,14 @@ ButtonRestartToolkit:
 {
 	Progress, w250,,, Hold yer ponies,  I'm restarting…
 	vRestart := 0
-	loop, 100
+	loop, 45
 	{
-		vRestart := vRestart + 2
-		Progress, %vRestart%
-		sleep, 10
+        Progress, %vRestart%
+        vRestart := vRestart + 10
+        sleep, 1
 	}
 	Progress,  Off
-	MsgBox Rebooted - please click 'OK' to proceed.
+	MsgBox, 0, , Rebooted - please click 'OK' to proceed., 1
 	Reload
 	ExitApp
 }
@@ -99,7 +99,7 @@ VersionCheck:
 ; FileReadLine, %CurrentVer%, ShortcutToolkit.ahk, 5
 ; FileReadLine, %NewVer%, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, 5
 IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
-UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ;*[ShortcutToolkit]
+UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
 IniRead, NewVer, JunkKit.ahk, INI_Section, version
 FileDelete, JunkKit.ahk
 if (CurrentVer < NewVer)
@@ -109,6 +109,8 @@ if (CurrentVer < NewVer)
 	}
 Return
 }
+
+
 
 ButtonForceUpdateToolkit:
 UpdateScript:
@@ -120,6 +122,109 @@ UpdateScript:
 	Reload
 	ExitApp
 }
+
+
+;===========================================================
+;==  Mailshop Update Module
+;===========================================================
+
+
+If (A_ComputerName = "DP08-DT")
+    {
+    SetTimer MailShopUpdateCheck, 60000 ; Check each minute
+    }
+    
+
+MailShopUpdateCheck:
+If (A_Hour = 03 And A_Min = 12)
+    {
+	Progress, w250,,, Please hold,  I'm checking for a mailshop update…
+	Sleep, 2000
+	Progress, off
+	gosub MailShopVersionCheck
+	}
+Return
+
+; The following is for testing ONLY, and shouldn't be used otherwise.
+/*
+SetTimer MailShopUpdateCheck, 1000 ; Check each second
+Return
+
+MailShopUpdateCheck:
+If (A_Hour = 13)
+	{
+	Msgbox, Hey!
+	Progress, w250,,, Please hold,  I'm checking for a mailshop update…
+	Sleep, 10000
+	Progress, off
+	gosub MailShopVersionCheck
+	}
+Return
+*/
+; End Testing Snippit
+
+
+MailShopVersionCheck:
+^+#F6::
+{
+    IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, MailShopVersion
+    ;UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
+    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/MB_Add_MailShop_Updater_To_Toolkit/ShortcutToolkit.ahk, JunkKit.ahk ; TESTING
+    IniRead, NewVer, JunkKit.ahk, INI_Section, MailShopVersion
+    FileDelete, JunkKit.ahk
+    if (CurrentVer < NewVer)
+    	{
+    	gosub MailShopUpdateScript ; Insert the following above if you need to check anything in the future: MsgBox, %CurrentVer% & %NewVer%
+    	}
+    Return
+}
+
+;ButtonForceUpdateMailShop:
+MailShopUpdateScript:
+^+#F7:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+F7 | Typing Ctrl+Shift+Win+F7 will force an update of MailShop
+{
+
+    ;TODO Insert code to have it check for and close MailShop, as well as then check for a lock file.
+
+    Progress, w250,,, Updating Mailshop - Please hold your ponies…
+    Progress, 10
+    FileCopy, X:\DP Use\StagedMailshopUpdates\MSApp2k.mdb, C:\Program Files\MailShop\OLD\MSApp2k.mdb.OLD, 1
+    Progress, 50
+    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk
+    Progress, 75
+    ErrorCount := CopyFilesAndFolders("X:\DP Use\StagedMailshopUpdates\*.*", "C:\Program Files\MailShop", 1)
+    Progress, 100
+    Progress, Off
+    If ErrorCount <> 0
+        MsgBox %ErrorCount% files/folders could not be copied - your update MAY not have completed successfully - please see Marvin.
+    Else
+        MsgBox Your MailShop installation has been updated - enjoy!
+    Reload
+	ExitApp
+}
+
+
+; The following example copies all files and folders inside a folder to a different folder:
+
+
+CopyFilesAndFolders(SourcePattern, DestinationFolder, DoOverwrite = false)
+; Copies all files and folders matching SourcePattern into the folder named DestinationFolder and
+; returns the number of files/folders that could not be copied.
+{
+    ; First copy all the files (but not the folders):
+    FileCopy, %SourcePattern%, %DestinationFolder%, %DoOverwrite%
+    ErrorCount := ErrorLevel
+    ; Now copy all the folders:
+    Loop, %SourcePattern%, 2  ; 2 means "retrieve folders only".
+    {
+        FileCopyDir, %A_LoopFileFullPath%, %DestinationFolder%\%A_LoopFileName%, %DoOverwrite%
+        ErrorCount += ErrorLevel
+        if ErrorLevel  ; Report each problem folder by name.
+            MsgBox Could not copy %A_LoopFileFullPath% into %DestinationFolder%.
+    }
+    return ErrorCount
+}
+
 
 
 
@@ -141,7 +246,7 @@ loop parse, content,`n
   position +=1
   stringtrimleft com,a_loopfield,%position%
   comment =%comment%%com%`n`n
- } 
+ }
 }
   gui, submit
   msgbox %comment%
@@ -153,14 +258,14 @@ Return
 ;==========================================================
 
 
-::Jam::James Chase`t8023875157`t110 ;c ?? Populate Warehouse Name & Number ?? Type "jam" & Hit Tab OR just press the Warehouse NDC SCF Info button | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
+::Jam::James Chase`t8023875157`t110 ;c 🌟 Populate Warehouse Name & Number ⌨️ Type "jam" & Hit Tab OR just press the Warehouse NDC SCF Info button | This will auto-populate the warehouse info on the NDC/SCF 8125 screen
 ; :*:jam`t::James Chase`t8023875157`t110 ; Old - replaced by above
 
 
 
 ButtonWarehouseNDCSCFInfo:
 {
-Gui, Submit 
+Gui, Submit
 SendInput James Chase`t8023875157`t110
 Return
 }
@@ -196,10 +301,10 @@ ButtonLaunchWiki:
     Return
 }
 
-^F1::GoSub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
+^F1::gosub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
 
 
-^!k::
+^!k::   ; Believe it or not, this is more of a test construct than anything that does "Work".
 {
 test := A_UserName
 If test = "kendrak"
@@ -212,6 +317,17 @@ Else
 	MsgBox, Kendra is Kewl!
 	return
 	}
+}
+
+
+
+; Stub for future work:
+; https://www.autohotkey.com/download/AutoCorrect.ahk
+
+^+#a::
+{
+    Run AutoCorrect.ahk
+    return
 }
 
 ;===========================================================
@@ -229,12 +345,12 @@ CloseAllWindows: ; Close all and reset the GUI number
 {
 	;Reload
 	;ExitApp
-    IfWinExist DP Dashboard 
+    IfWinExist DP Dashboard
     {
         Gui DPDashboard:Cancel
         Gui, submit
     }
-	Return	
+	Return
 }
 
 #IfWinActive
@@ -279,6 +395,7 @@ CloseAllWindows: ; Close all and reset the GUI number
 ;==  Clipboard Management
 ;===========================================================
 
+TestClipCapture:
 ~^x::
 ~^c::
 {
@@ -345,14 +462,27 @@ ButtonClipboardManager:
 	Gui, Add, Progress, w300 h20 cBlue vVarProgressMeter
 	Gui, Add, Button,default ym,&Go
 	Gui, Show,,Choose your Clipboard
+
+    ; ==== Start Test Code
+    ; This is ONLY used during debugging, but please don't touch it if you don't need to.
+
+    if DebugVar = 1
+    {
+        WinActivate, Choose your Clipboard
+        SendInput, 2{ENTER}
+        gosub, ButtonGo
+        return
+    }
+    ; ==== End Test Code
+
 	Loop{
 			GuiControl,, varProgressMeter, +1
 			sleep, 30
 		} Until A_Index > 99
-	GoSub, ButtonGo
-	Return
-	
-	
+	gosub, ButtonGo
+	return
+
+
 	ButtonGo:
 		{
 			gui, submit
@@ -363,7 +493,7 @@ ButtonClipboardManager:
 			; MsgBox, %clpbNbr% Test
 			return
 		}
-Return	
+Return
 }
 
 
@@ -373,7 +503,7 @@ Return
 
 ButtonLogin:
 {
-    Gui, Submit 
+    Gui, Submit
     User := ""
     IniRead,UnparsedCreds,\\Watson\Production\X\DP Use\Shared AHKs\Toolkit.ini, PostalOneLogins, %A_Username%, "ERROR|ERROR"  ; Consider making the \\Watson\Prod... path a path to X:\DP Use\etc
     UserCreds := Object("User")
@@ -392,8 +522,8 @@ ButtonLogin:
         MsgBox, Error! Danger Will Robinson! See Marvin, and Mention ButtonLogin Loop
         }
     }
-    
-    
+
+
 
 ;}    ; <---Comment out the bracket once I'm working on this again
 ;/* ; <---Comment out the slashasterisk once I'm working on this again
@@ -426,17 +556,17 @@ Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
         MDClientVar := "ERROR!!!"
         MsgBox, Please see Marvin - something went wrong. Please screenshot and send him the next screen after this one.
         Msgbox, Error Data: %A_Username% | %MDClientVar%
-        Reload 
+        Reload
         Return
     }
     If MDClientVar <> ""
     {
-        
+
         ;Msgbox, %MDClientVar%run-mdclient.bat  ; For testing only - uncomment out next three lines if testing
-        ;Reload 
+        ;Reload
         ;return
-        
-        
+
+
         Run, %MDClientVar%run-mdclient.bat, %MDClientVar%, Max
         SplashTextOn, 400, 100, Wait for it…, Please Left Click the "Username" field once the Uploader is open and ready for input then hit "Scroll Lock" to have your credentials entered and login.
         KeyWait, ScrollLock, D
@@ -457,11 +587,11 @@ Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
     }
     Sleep, 200
 
-    
+
     Run, chrome.exe --incognito https://gateway.usps.com/eAdmin/view/signin
     Sleep 5000
     Send, {ShiftDown}{Tab}{Tab}{ShiftUp}%User%{TAB}%Pass%{ENTER}
-    Return    
+    Return
 }
     ;MsgBox, Hopefull this doesn't popup until I'm ready for it...
     ;MsgBox, This is under construction. At the moment, it just launches the login screen in incogneto mode.
@@ -480,7 +610,7 @@ Else If FileExist("C:\Postal1\MDRClient-win64-PROD\run-mdclient.bat")
 
 
 ;used to be WBGet renamed though
-IEGet(WinTitle="ahk_class IEFrame", Svr#=1) 
+IEGet(WinTitle="ahk_class IEFrame", Svr#=1)
 { ; based on ComObjQuery docs
    static   msg := DllCall("RegisterWindowMessage", "str", "WM_HTML_GETOBJECT")
    ,   IID := "{0002DF05-0000-0000-C000-000000000046}" ; IID_IWebBrowserApp
@@ -513,10 +643,10 @@ ButtonLogin:
 
 	FileRead, vP1Blob, %A_MyDocuments%\FMAHK.config
 
-	Loop 
+	Loop
 	{
 	 Loop, read, %A_MyDocuments%\FMAHK.config
-		  last_line := USPSLogin|_|_|  
+		  last_line := USPSLogin|_|_|
 	 if InStr(last_line,"login:")
 		  break
 	}
@@ -566,7 +696,7 @@ ButtonThankYouEmailer:
 	Sleep, 50
 	Send, ^c
 	sleep,  50
-	
+
 	If clipboard != %A_MM%/%A_DD%/%A_YYYY% ; If they are different...
 	{
 		MsgBox, 4, Proceed with Wrong Date?, %clipboard% FAILS to match today's date (%A_MM%/%A_DD%/%A_YYYY%), 10
@@ -621,9 +751,9 @@ ButtonThankYouEmailer:
 	;sleep,  50
 	; =============== End of the section that should be refactored into an array-object loop.
 	; Variables Used: %MsgBox%, %EnterDate%,  %ClientName% %Package% %FileName% %MailQty% %MailDate% %Salutation% %ClientEmail%
-	
-	
-	
+
+
+
 	; The following section is what actually SENDS the email
 	m := ComObjCreate("Outlook.Application").CreateItem(0)
 	m.Subject := "Thank you!"
@@ -631,7 +761,7 @@ ButtonThankYouEmailer:
 	; Original - for reference: m.Body :="Here is the body... `n`n And the really cool thing about using this method, `n`n`n`n`n`n is, you can have what ever you want as the "body" and `n`n`n`n`n`n not worry about how long it is...or worry about the non-formatting issues that come from the mailto: command`n`n`n`n ...yes, that is a whole bunch of "new Lines" to show you how you can format this however you want...`n`n`n`n`n`n`n`n AND IT WORKS
 	m.Body := "Dear " Salutation " `n`n Good news: your thank you letter file has been mailed. `n`n File Name: " FileName " `n`n Number Mailed: " MailQty " `n`n Date Received: " EnterDate " `n`n Date Mailed: " MailDate " `n`n Package Number:  " Package " `n`n Sincerely, `n`n`n The Five Maples Team"
 	m.Display ;to display the email message...and the really cool part, if you leave this line out, it will not show the window............... but the m.send below will still send the email!!!
-	; m.Send ;to automatically send and CLOSE that new email window...  
+	; m.Send ;to automatically send and CLOSE that new email window...
 	MsgBox, In the future, the email will send automatically - this just gives you a chance to review the first few times. Please let marvin@fivemaples.com know when to 'pull the switch'.
 	Return
 }
@@ -647,9 +777,9 @@ ButtonThankYouEmailer:
 ButtonJustDupeIndexes:
 {
 Gui, Submit
-WinWait, ahk_class TMailList_Form, 
-IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
-WinWaitActive, ahk_class TMailList_Form	
+WinWait, ahk_class TMailList_Form,
+IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form,
+WinWaitActive, ahk_class TMailList_Form
 SetupJustDupeIndexes()
 Return
 }
@@ -657,8 +787,8 @@ Return
 ButtonStdDedupe:
 {
 Gui, Submit
-WinWait, ahk_class TMailList_Form, 
-IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
+WinWait, ahk_class TMailList_Form,
+IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form,
 WinWaitActive, ahk_class TMailList_Form
 SetupStdDedupe()
 Return
@@ -670,8 +800,8 @@ Return
 
 SetupJustDupeIndexes()
 {
-WinWait, ahk_class TMailList_Form, 
-IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
+WinWait, ahk_class TMailList_Form,
+IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form,
 WinWaitActive, ahk_class TMailList_Form
 sleep, 100
 Gui, Submit  ; Save the input from the user to each control's associated variable.
@@ -680,25 +810,25 @@ Progress, w250,,, Creating Indexes - Please Hold Your Ponies
 
 ; Start of Script, this chunk of text gets us INTO the indexes - RUN FROM BASE MM2010 WINDOW!
 Send, {CTRLDOWN}a{CTRLUP}
-WinWait, Duplicate Records Processing, 
-IfWinNotActive, Duplicate Records Processing, , WinActivate, Duplicate Records Processing, 
-WinWaitActive, Duplicate Records Processing, 
+WinWait, Duplicate Records Processing,
+IfWinNotActive, Duplicate Records Processing, , WinActivate, Duplicate Records Processing,
+WinWaitActive, Duplicate Records Processing,
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 
 Progress, 12
 
 ; Creates ZCLF2, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZCLF2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],12) ; Sending ZCLF2
 
@@ -706,13 +836,13 @@ Progress, 25
 
 ; Creates ZLF2, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZLF2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],5) ; Sending ZLF2
 
@@ -720,13 +850,13 @@ Progress, 37
 
 ; Creates ZLF, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZLF{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[First Name_] ; Sending ZLF
 
@@ -734,13 +864,13 @@ Progress, 50
 
 ; Creates ZL2, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZL2{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[Add2_] ; Sending ZL2
 
@@ -748,13 +878,13 @@ Progress, 62
 
 ; Creates ZCL, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZCL{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}Left([ZIP+4_],5)+Left([Company_],10)+Left([Last Name_],10) ; Sending ZCL
 
@@ -762,13 +892,13 @@ Progress, 75
 
 ; Creates ZDPL, sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, ZDPL{ENTER}
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
 
@@ -776,14 +906,14 @@ Progress, 98
 
 ; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
-WinWait, Index Name, 
-IfWinNotActive, Index Name, , WinActivate, Index Name, 
-WinWaitActive, Index Name, 
+WinWait, Index Name,
+IfWinNotActive, Index Name, , WinActivate, Index Name,
+WinWaitActive, Index Name,
 Send, Z2{ENTER}
 Progress, 99
-WinWait, Indexes, 
-IfWinNotActive, Indexes, , WinActivate, Indexes, 
-WinWaitActive, Indexes, 
+WinWait, Indexes,
+IfWinNotActive, Indexes, , WinActivate, Indexes,
+WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
 SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
 
@@ -798,8 +928,8 @@ Return
 
 SetupStdDedupe()
 {
-	WinWait, ahk_class TMailList_Form, 
-	IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form, 
+	WinWait, ahk_class TMailList_Form,
+	IfWinNotActive, ahk_class TMailList_Form, , WinActivate, ahk_class TMailList_Form,
 	WinWaitActive, ahk_class TMailList_Form
 	sleep, 100
 	Gui, Submit  ; Save the input from the user to each control's associated variable.
@@ -810,26 +940,26 @@ SetupStdDedupe()
 
 	; Start of Script, this chunk of text gets us INTO the indexes - RUN FROM BASE MM2010 WINDOW!
 	Send, {CTRLDOWN}d{CTRLUP}
-	WinWait, Distribution Report, 
-	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
-	WinWaitActive, Distribution Report, 
+	WinWait, Distribution Report,
+	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report,
+	WinWaitActive, Distribution Report,
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 
 	Progress, 12
 
 	; Possible modularity chance from here...
 
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZCLF2{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],12) ; Sending ZCLF2
 
@@ -837,13 +967,13 @@ SetupStdDedupe()
 
 	; Creates ZLF2, sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZLF2{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],5) ; Sending ZLF2
 
@@ -851,13 +981,13 @@ SetupStdDedupe()
 
 	; Creates ZLF, sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZLF{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[First Name_] ; Sending ZLF
 
@@ -865,13 +995,13 @@ SetupStdDedupe()
 
 	; Creates ZL2, sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZL2{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}left([ZIP+4_],5)+left([Last Name_],5)+[Add2_] ; Sending ZL2
 
@@ -879,13 +1009,13 @@ SetupStdDedupe()
 
 	; Creates ZCL, sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZCL{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}Left([ZIP+4_],5)+Left([Company_],10)+Left([Last Name_],10) ; Sending ZCL
 
@@ -893,26 +1023,26 @@ SetupStdDedupe()
 
 	; Creates ZDPL, sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, ZDPL{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
 
 
 	; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, Z2{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
 
@@ -921,28 +1051,28 @@ SetupStdDedupe()
 	Progress, 90
 
 	Send, {ALTDOWN}n{ALTUP}
-	WinWait, Index Name, 
-	IfWinNotActive, Index Name, , WinActivate, Index Name, 
-	WinWaitActive, Index Name, 
+	WinWait, Index Name,
+	IfWinNotActive, Index Name, , WinActivate, Index Name,
+	WinWaitActive, Index Name,
 	Send, Dedupe{ENTER}
-	WinWait, Indexes, 
-	IfWinNotActive, Indexes, , WinActivate, Indexes, 
-	WinWaitActive, Indexes, 
+	WinWait, Indexes,
+	IfWinNotActive, Indexes, , WinActivate, Indexes,
+	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
 	SendInput {Raw}[Source List] ; Naming Source List
 	Send, {ALTDOWN}o{ALTUP}
-	WinWait, Confirm, 
-	IfWinNotActive, Confirm, , WinActivate, Confirm, 
-	WinWaitActive, Confirm, 
+	WinWait, Confirm,
+	IfWinNotActive, Confirm, , WinActivate, Confirm,
+	WinWaitActive, Confirm,
 	Send, y
-	WinWait, Distribution Report, 
-	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report, 
-	WinWaitActive, Distribution Report, 
+	WinWait, Distribution Report,
+	IfWinNotActive, Distribution Report, , WinActivate, Distribution Report,
+	WinWaitActive, Distribution Report,
 	Progress, 94
 	Send, {SHIFTDOWN}{TAB}{SHIFTUP}dedupe{ALTDOWN}b{ALTUP}
-	WinWait, Save Procedure Information, 
-	IfWinNotActive, Save Procedure Information, , WinActivate, Save Procedure Information, 
-	WinWaitActive, Save Procedure Information, 
+	WinWait, Save Procedure Information,
+	IfWinNotActive, Save Procedure Information, , WinActivate, Save Procedure Information,
+	WinWaitActive, Save Procedure Information,
 	Sleep, 100
 	Send, {ALTDOWN}d{ALTUP}
 
@@ -950,9 +1080,9 @@ SetupStdDedupe()
 
 	;Printing the distribution report - this may need to change later
 
-	WinWait, Distribution Report - Print, 
-	IfWinNotActive, Distribution Report - Print, , WinActivate, Distribution Report - Print, 
-	WinWaitActive, Distribution Report - Print, 
+	WinWait, Distribution Report - Print,
+	IfWinNotActive, Distribution Report - Print, , WinActivate, Distribution Report - Print,
+	WinWaitActive, Distribution Report - Print,
 	;Send, {ALTDOWN}n{ALTUP}adobe{ALTDOWN}o{ALTUP}{ENTER}
 
 	; End of Script, exits back to "Indexes"
@@ -1014,7 +1144,7 @@ while GetKeyState("XButton2", "P") ; this loop only executes when the XButton is
 	 ; Try this next time Marv:
 	 ;MouseSpeed = (%MouseSpeed% / 2)
 	 Send, {Up} ; this presses down only while the above condition is met
-	 sleep, %MouseSpeed%   ; OLD VERSION: sleep, %MouseSpeed%   ;sleep, (%MouseSpeed% / 2)     
+	 sleep, %MouseSpeed%   ; OLD VERSION: sleep, %MouseSpeed%   ;sleep, (%MouseSpeed% / 2)
 	 ;MouseSpeed = (%MouseSpeed% / 0.5)
 }
 ;Send, {Alt Up}{LButton Up} ; this liberates when the above condition is not met anymore
@@ -1062,39 +1192,82 @@ return
 
 
 
-;==========================================================
-;==  TEST SUITE (All Tests - if fail, raise INSTANT popup)
-;==========================================================
+;====================================================================
+;==  TEST SUITE (All Tests - if fail, pump failure to TestResults)
+;====================================================================
+
+#IfWinActive ShortcutToolkit.ahk
+
++!r:: ; Ctrl + Alt + R - Instantly reload & reboot script
+{
+    msgbox, , , Reloading Script, 0.30
+    Reload
+    ExitApp
+    return
+}
 
 #IfWinActive
 
-^+b:: ; This is the "Test Suite" - run it and it will complain of issues. Once run, it reboots the script for a clean working state.
+ClipboardTestFunc(TestClip1, TestClip2)
 {
-    If ("(?)" = "(ツ)")
-        Msgbox, Hey - someone screwed up the ASCII/Unicode encoding - see Marvin.
-	Reload
-	ExitApp
-    ; Return
+	if (TestClip1 == TestClip2)
+    {
+		return
+    }
+    else
+    {
+        throw Exception "Fail - Clipboard management not working"
+    }
 }
 
+TestResults := ""
+DebugVar := 0
+^+b:: ;c 🌟 Run ShortcutToolkit self-test suite ⌨️ Ctrl+Shift+B - ONLY USE IF YOU'RE KENDRA OR MARVIN
 
+; This is the "Test Suite" - run it and it will complain of issues. Once run, it reboots the script for a clean working state.
+{
+    ; TODO Add a "do you REALLY wanna run tests and reset the whole damn thing" button
+    DebugVar := 1
+    ;TEST - This tests for UNICODE encoding being changed to ASCII - if yes, then shruggie won't work no mo.
+    if ("(?)" == "(ツ)")
+    {
+        TestResults := "Hey - someone screwed up the ASCII/Unicode encoding - see Marvin."
+    }
 
+    ;TEST - This tests the clipboard manager (TODO: Make it more comprehensive)
+    ClipHolder := Clipboard
+    ClipHolder1 := clpb1
+    Clipboard := "Goat"
+    clpb1 := "Pony"
+    gosub TestClipCapture
+    gosub ButtonClipboardManager
+    try
+    {
+        ClipboardTestFunc("Goat", clpb1)
+	}
+	catch e
+	{
+		if (TestResults <> "")
+		{
+			TestResults := TestResults . " | " . e
+		}
+		else
+		{
+			TestResults := e
+		}
+	}
+    Clipboard := ClipHolder
+    clpb1 := ClipHolder1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    ;Displays test results
+    if (TestResults <> "")
+    {
+        msgbox Some tests failed, click OK to commence reboot. Failed tests: %TestResults%
+        Reload
+        ExitApp
+    }
+    Else
+        msgbox, , , TESTS PASSED!, 1.00
+        DebugVar := 0
+        return
+}
