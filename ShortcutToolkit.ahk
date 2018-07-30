@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=29
+version=30
 MailShopVersion=6
 
 
@@ -24,6 +24,9 @@ MouseSDown = 30
 CurrentVer = 0
 NewVer = 0
 ;SetBatchLines, -1	; Runs the script at max speed, default is 10 or 20 ms
+
+IniRead,AccessToken,\\Watson\Production\X\DP Use\Shared AHKs\Toolkit.ini, AccessTokens, ShortCutAccessToken, "ERROR - NO KEY FOUND!"
+
 
 ;==========================================================
 ;==  GENERAL NOTES
@@ -60,7 +63,7 @@ HasVal(haystack, needle)
 ;===========================================================
 ;==  Update Module
 ;===========================================================
-; Files if hosted on Github    : https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true
+; Files if hosted on Github    : See AccessToken in X:\DP Use\Shared AHKs\Toolkit.ini
 
 SetTimer UpdateCheck, 60000 ; Check each minute
 ;Return
@@ -120,7 +123,7 @@ VersionCheck:
 ; FileReadLine, %CurrentVer%, ShortcutToolkit.ahk, 5
 ; FileReadLine, %NewVer%, //raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, 5
 IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, version
-UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
+UrlDownloadToFile, AccessToken, JunkKit.ahk ; PRODUCTION
 IniRead, NewVer, JunkKit.ahk, INI_Section, version
 FileDelete, JunkKit.ahk
 if (CurrentVer < NewVer)
@@ -137,7 +140,7 @@ ButtonForceUpdateToolkit:
 UpdateScript:
 ^+#u:: ;c 🌟 Update Script ⌨️ Ctrl+Shift+Win+u | Typing Ctrl+Shift+Win+u will trigger an update of the script - also automatically triggered every morning at 1:15am
 {
-	UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk ;*[ShortcutToolkit]
+	UrlDownloadToFile, AccessToken, ShortcutToolkit.ahk ;*[ShortcutToolkit]
 	;Progress, w250,,, Hold yer ponies,  I'm updating…
 	MsgBox If you see me, I either just updated when you triggered me to, or I updated last night. Either way, please click 'OK', and go about your day! Also, press 'Win+F2' to open up a quick help cheat-sheet.
 	Reload
@@ -188,8 +191,8 @@ MailShopVersionCheck:
 ^+#F6::
 {
     IniRead, CurrentVer, ShortcutToolkit.ahk, INI_Section, MailShopVersion
-    ;UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, JunkKit.ahk ; PRODUCTION
-    UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/MB_Add_MailShop_Updater_To_Toolkit/ShortcutToolkit.ahk, JunkKit.ahk ; TESTING
+    UrlDownloadToFile, AccessToken, JunkKit.ahk ; PRODUCTION
+    ;UrlDownloadToFile, ; NOT GONNA WORK, NEED TO FIX:  https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/MB_Add_MailShop_Updater_To_Toolkit/ShortcutToolkit.ahk, JunkKit.ahk ; TESTING
     IniRead, NewVer, JunkKit.ahk, INI_Section, MailShopVersion
     FileDelete, JunkKit.ahk
     if (CurrentVer < NewVer)
@@ -215,7 +218,7 @@ MailShopUpdateScript:
         Progress, 10
         FileCopy, X:\DP Use\StagedMailshopUpdates\MSApp2k.mdb, C:\Program Files\MailShop\OLD\MSApp2k.mdb.OLD, 1
         Progress, 50
-        UrlDownloadToFile, https://raw.githubusercontent.com/MarvinFiveMaples/ShortcutToolkit/master/ShortcutToolkit.ahk?raw=true, ShortcutToolkit.ahk
+        UrlDownloadToFile, AccessToken, ShortcutToolkit.ahk
         Progress, 75
         ErrorCount := CopyFilesAndFolders("X:\DP Use\StagedMailshopUpdates\*.*", "C:\Program Files\MailShop", 1)
         Progress, 100
