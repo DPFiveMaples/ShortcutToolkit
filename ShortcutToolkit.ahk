@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=30
+version=31
 MailShopVersion=6
 
 
@@ -331,7 +331,8 @@ ButtonLaunchWiki:
     Return
 }
 
-^F1::gosub, ButtonLogin ; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
+^F1::gosub, ButtonLogin ;c 🌟 Mail.dat Login ⌨️ Ctrl+F1 | Ctrl+F1 (or just pressing the "Login" button) will open the Mail.dat uploader and log in. Once the uploader is closed, it will open the postal dashboard and log in
+; Note: "Help" (Win+F2) info included under primary label ButtonLogin.
 
 
 ^!k::   ; Believe it or not, this is more of a test construct than anything that does "Work".
