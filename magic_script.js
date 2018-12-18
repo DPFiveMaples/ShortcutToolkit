@@ -12,6 +12,8 @@ $(document).ready(function(){
 	$(".letter").hide();
 	$(".reply").hide();
 	$(".envelope").hide();
+	$(".comingle").hide();
+	$(".dropselse").hide();
 	
 	
 /*checkbox conditions*/	
@@ -113,6 +115,42 @@ $(document).ready(function(){
 		}
 	});
 	
+		$("#DropsElseCheck").click(function(){
+		if($("#DropsElseCheck").is(":checked")){
+			$(".dropselse").show();
+		} else {
+			$(".dropselse").hide();
+		}
+	});
+	
+		$("#ComingleCheck").click(function(){
+		if($("#ComingleCheck").is(":checked")){
+			$(".comingle").show();
+			$(".notcomingle").hide();
+		} else {
+			$(".comingle").hide();
+			$(".notcomingle").show();
+		}
+	});
+	
+	/* Import Table Stuff */
+	$("#addlistbtn").click(function(){
+		$("#importtable .fieldlabel").each(function(){
+		$(this).append('<td><input type="checkbox"/></td>');
+		});
+		$("#importtable .listlabel").each(function(){
+		$(this).append('<td><textarea rows="2" cols="10" class="listname"></textarea></td>');
+		});
+		$("#tritable .trilabel").each(function(){
+		$(this).append('<td><textarea rows="1" cols="4" class="smallfont"></textarea></td>');
+		});
+   });
+   	$("#addfieldbtn").click(function(){
+		$("#importtable").each(function(){
+		$(this).append('<tr class="fieldlabel"><th class="nopadding"><textarea rows="1" cols="13"></textarea></th></tr>');
+		
+	});
+   });
 
 });	
 

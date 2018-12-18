@@ -1,3 +1,7 @@
+@media print {
+    #selectstable {page-break-before: always;}
+}
+
 body {
 	font-family: Calibri, sans-serif;
 	font-size: 11pt;
@@ -9,7 +13,7 @@ body {
 
 h1{
 	text-align: center;
-	font-size: 22pt;
+	font-size: 21pt;
 	
 }
 
@@ -23,9 +27,9 @@ fieldset {
 }
 
 #jobfeatures {	
-    -webkit-column-count:3;
-    -moz-column-count: 3;
-    column-count: 3;
+    -webkit-column-count:4;
+    -moz-column-count: 4;
+    column-count: 4;
 	height: 90px;
 	float: center;
 }
@@ -45,5 +49,147 @@ ul {
 
 .jobinfo {
 	text-align: center;
+}
+
+/** **/
+#selectstable td:nth-child(2) {
+	padding-right: 15px;
+}
+
+caption, .caption{
+	text-align: left;
+	font-weight: bold;
+	font-size: 12pt;
+}
+
+#selectstable{
+	border: 1px solid black;
+	padding: 5px;
+	width: 100%;
+	max-width: 800px;
+	margin-top: 20px;
+}
+
+#totalstable{
+	border: 1px solid black;
+	padding: 5px;
+	width: 48%;
+	max-width: 220px;
+	margin-top: 20px;
+	float: left;
+}
+#ncoatable, #dedupetable{
+	border: 1px solid black;
+	padding: 5px;
+	max-width: 250px;
+	min-width: 221px;
+	margin-top: 10px;
+
+}
+/*#dedupetable{
+	border: 1px solid black;
+	padding: 5px;
+	max-width: 250px;
+	min-width: 200px;
+	margin-top: 20px;
+}*/
+#proofstable{
+	border: 1px solid black;
+	padding: 5px;
+	width: 33%;
+	max-width: 250px;
+	margin-top: 20px;
+}
+#notestable{
+	border: 1px solid black;
+	padding: 5px;
+	max-width: 250px;
+	min-width: 221px;
+
+
+}
+#timestable{
+	border: 1px solid black;
+	padding: 5px;
+	width: 48%;
+	max-width: 200px;
+	margin-top: 20px;
+	float: right;
+	
+	
+}
+
+/** **/
+#importtable, #tritable{
+	border-collapse: collapse;
+}
+
+#importtable th, #tritable th{
+	text-align: left;
+	border: 1px solid black;
+	padding: 2px;
+	width: 107px;
+	height: 20px;
+}
+
+#importtable td{
+	border: 1px solid black;
+	padding: 0px;
+	max-width: 47px;
+	text-align: center;
+}
+#tritable td{
+	border: 1px solid black;
+	padding: 0px;
+	width: 47px;
+	text-align: center;
+ }
+ 
+.listlabel{
+	height: 95px;	
+	vertical-align: bottom;
+}
+
+.listname{
+	-webkit-transform: rotate(-90deg); 
+	-moz-transform: rotate(-90deg);
+	display: block;
+	transform-origin:17px 15px;	
+}
+
+textarea{
+	font-family: Calibri, sans-serif;
+	font-size: 10pt;
+}
+
+.smallfont{
+	font-size: 9pt;
+}
+
+.nopadding{
+ padding: 0 !important;
+ margin: 0 !important;
+}
+
+.tabspace{
+	width: 10px;
+}
+
+#loadlist{
+	border: 1px solid black;
+	padding: 10px;
+	min-width: 400px;
+
+}
+.leftfloatgroup{
+		float: left;
+		min-width: 65%;
+}
+.rightfloatgroup{
+		float: right;
+		min-width: 25%
+}
+.bottomfloatgroup{
+		min-width: 95%;
 }
 
