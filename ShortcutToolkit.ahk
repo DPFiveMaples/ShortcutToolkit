@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=27
+version=28
 
 
 */
@@ -708,7 +708,7 @@ WinWait, Indexes,
 IfWinNotActive, Indexes, , WinActivate, Indexes, 
 WinWaitActive, Indexes, 
 Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+left([Add2_],12) ; Sending ZCLF2
+SendInput {Raw}left([ZIP+4_],5)+left([Company_],5)+left([Last Name_],5)+left([First Name_],5)+[Add2_] ; Sending ZCLF2
 
 Progress, 25
 
