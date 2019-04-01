@@ -2,7 +2,7 @@
 ;==  INI Values (DO NOT ADJUST THE LINE SPACING!!!)
 ;==========================================================
 [INI_Section]
-version=34
+version=35
 MailShopVersion=6
 
 
@@ -935,18 +935,18 @@ SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
 
 Progress, 98
 
-; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
+; Creates ZA2 (AKA Z2), sets it to an expression and then inputs it.
 Send, {ALTDOWN}n{ALTUP}
 WinWait, Index Name,
 IfWinNotActive, Index Name, , WinActivate, Index Name,
 WinWaitActive, Index Name,
-Send, Z2{ENTER}
+Send, ZA2{ENTER}
 Progress, 99
 WinWait, Indexes,
 IfWinNotActive, Indexes, , WinActivate, Indexes,
 WinWaitActive, Indexes,
 Send, {ALTDOWN}xp{ALTUP}
-SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
+SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending ZA2
 
 ; End of Script, exits back to "Indexes"
 Send, {ALTDOWN}o{ALTUP}{ENTER}
@@ -1065,17 +1065,17 @@ SetupStdDedupe()
 	SendInput {Raw}[ZIP+4_] + [D.P. CODE] + left([Last Name_],3) ; Sending ZDPL
 
 
-	; Creates Z2 (AKA ZA2), sets it to an expression and then inputs it.
+	; Creates ZA2 (AKA Z2), sets it to an expression and then inputs it.
 	Send, {ALTDOWN}n{ALTUP}
 	WinWait, Index Name,
 	IfWinNotActive, Index Name, , WinActivate, Index Name,
 	WinWaitActive, Index Name,
-	Send, Z2{ENTER}
+	Send, ZA2{ENTER}
 	WinWait, Indexes,
 	IfWinNotActive, Indexes, , WinActivate, Indexes,
 	WinWaitActive, Indexes,
 	Send, {ALTDOWN}xp{ALTUP}
-	SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending Z2
+	SendInput {Raw}Left([ZIP+4_],5)+left([Add2_],15) ; Sending ZA2
 
 	; to here.
 
