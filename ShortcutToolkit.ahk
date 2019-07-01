@@ -296,7 +296,7 @@ Return
 ButtonWarehouseNDCSCFInfo:
 {
 Gui, Submit
-SendInput CarolMartin`t8023875157`t110
+SendInput Carol Martin`t8023875157`t110
 Return
 }
 
@@ -717,7 +717,7 @@ ButtonThankYouEmailer:
 #+^m:: ;c 🌟 Warehouse Macro ⌨️ Ctrl+Shift+Win+m | Ctrl+Shift+Win+m will trigger the Warehouse Macro - this will launch the Google Sheet and (after a couple of clicks) send an email to Heather.
 {
     Gui, Submit
-	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=469032231
+	Run, C:\Program Files (x86)\Google\Chrome\Application\chrome.exe https://docs.google.com/spreadsheets/d/1l35If337LGq5pjDBIJ9lBj_UkVYxzVGyzLtMkGcwIqk/edit#gid=0
 	Sleep,  50
 	Progress, zh0 fs18, Please click the cell containing the Enter Date of the row `n that you wish to email about and then press 'Pause' to proceed. `n This notice will remain until you do. :D
 	KeyWait, PAUSE, D
@@ -788,7 +788,7 @@ ButtonThankYouEmailer:
 	; The following section is what actually SENDS the email
 	m := ComObjCreate("Outlook.Application").CreateItem(0)
 	m.Subject := "Thank you!"
-	m.To := "awalsh@dakinhumane.org" ;This will provide a variable option, but will have to be redone: ClientEmail
+	m.To := "hmetzger@bib-arch.org" ;This will provide a variable option, but will have to be redone: ClientEmail
 	; Original - for reference: m.Body :="Here is the body... `n`n And the really cool thing about using this method, `n`n`n`n`n`n is, you can have what ever you want as the "body" and `n`n`n`n`n`n not worry about how long it is...or worry about the non-formatting issues that come from the mailto: command`n`n`n`n ...yes, that is a whole bunch of "new Lines" to show you how you can format this however you want...`n`n`n`n`n`n`n`n AND IT WORKS
 	m.Body := "Dear " Salutation " `n`n Good news: your thank you letter file has been mailed. `n`n File Name: " FileName " `n`n Number Mailed: " MailQty " `n`n Date Received: " EnterDate " `n`n Date Mailed: " MailDate " `n`n Package Number:  " Package " `n`n Sincerely, `n`n`n The Five Maples Team"
 	m.Display ;to display the email message...and the really cool part, if you leave this line out, it will not show the window............... but the m.send below will still send the email!!!
